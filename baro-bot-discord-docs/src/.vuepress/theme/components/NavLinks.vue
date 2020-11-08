@@ -109,65 +109,35 @@ export default {
 
 <style lang="stylus">
 .nav-links
-display inline-block
-a
-line-height
+  display inline-block
 
-1.4
-rem
-color inherit
-        & :hover,
+  a
+    line-height 1.4rem
+    color inherit
 
-&
-.router-link-active
-color
+    &:hover, &.router-link-active
+      color var(--v-primary-base)
 
-var
-(
---v-primary-base
+  .nav-item
+    position relative
+    display inline-block
+    margin-left 1.5rem
+    line-height 2rem
 
-)
-.nav-item
-position relative
-display inline-block
-margin-left
+    &:first-child
+      margin-left 0
 
-1.5
-rem
-line-height
+  .repo-link
+    margin-left 1.5rem
 
-2
-rem
-        & :first-child
-margin-left
-
-0
-.repo-link
-margin-left
-
-1.5
-rem
-
-@media (max-width: $ MQMobile)
+@media (max-width: $MQMobile)
   .nav-links
-  .nav-item, .repo-link
-  margin-left
+    .nav-item, .repo-link
+      margin-left 0
 
-0
-  @media (min-width: $ MQMobile)
-    .nav-item > a:not(.external)
-
-  &:hover,
-
-  &.router-link-active
-   margin-bottom
-
-  -2px
-    border-bottom
-
-  2px solid
-
-  lighten($accentColor,
-
-  8%)
+@media (min-width: $MQMobile)
+  .nav-item > a:not(.external)
+    &:hover, &.router-link-active
+      margin-bottom -2px
+      border-bottom 2px solid lighten($accentColor, 8%)
 </style>

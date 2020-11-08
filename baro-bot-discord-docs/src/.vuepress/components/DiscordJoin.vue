@@ -95,13 +95,11 @@
 element {
   background-image: url("https://cdn.discordapp.com/icons/393207704211947521/78d35b2aae1314ca31e296037e3b09cc.png?");
 }
-
 .inviteLargeIcon-HrAH61 {
   background-repeat: no-repeat;
   background-size: 100%;
   margin-right: 0;
 }
-
 .inviteIcon-DSd8cG {
   -ms-flex-align: center;
   -ms-flex-pack: center;
@@ -114,7 +112,6 @@ element {
   display: inline-flex;
   justify-content: center;
 }
-
 .iconSizeXLarge-1AvWOw {
   height: 100px;
   width: 100px;
@@ -171,7 +168,6 @@ element {
 .centeringWrapper-2Rs1dR {
   text-align: center;
 }
-
 .lookFilled-1Gx00P.colorBrand-3pXr91 {
   background-color: #7289da;
   color: #fff;

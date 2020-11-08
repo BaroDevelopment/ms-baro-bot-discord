@@ -66,45 +66,19 @@ export default {
 <style lang="stylus" scoped>
 
 .right
-color: #fff
+  color: #fff;
+  position: absolute;
+  top: 0;
+  border: 0;
+  right: 0;
 
-;
-position: absolute
-
-;
-top:
-
-0
-;
-border:
-
-0
-;
-right:
-
-0
-;
 .left
-color:#fff
-position: absolute
-top:
-
-0
-border:
-
-0
-left:
-
-0
-transform:
-
-scale
-(
--
-1
-,
-1
-)
+  color: #fff
+  position: absolute
+  top: 0
+  border: 0
+  left: 0
+  transform: scale(-1, 1)
 
 .github-corner:hover .octo-arm {
   animation: octocat-wave 560ms ease-in-out

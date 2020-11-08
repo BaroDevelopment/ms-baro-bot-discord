@@ -95,276 +95,106 @@ export default {
 
 <style lang="stylus">
 .dropdown-wrapper
-cursor pointer
-.nav-dropdown
-.dropdown-item
-color
+  cursor pointer
 
-var
-(
---v-accent-base
-
-)
-line-height
-
-1.7
-rem
-h4
-margin
-
-0.45
-rem
-
-0
-0
-border-top
-
-1
-px solid
-
-var
-(
---v-accent-base
-
-)
-padding
-
-0.45
-rem
-
-1.5
-rem
-
-0
-0.7
-rem
-color
-
-var
-(
---v-primary-base
-
-)
-font-size
-
-15
-px
-.dropdown-subitem-wrapper
-padding
-
-0
-list-style none
-.dropdown-subitem
-font-size
-
-0.9
-em
-a
-display block
-line-height
-
-1.7
-rem
-position relative
-border-bottom none
-font-weight
-
-400
-margin-bottom
-
-0
-padding
-
-0
-1.5
-rem
-
-0
-1.25
-rem
-
-                & :hover
-color
-
-var
-(
---v-secondary-base
-
-)
-
-&
-.router-link-active
-color
-
-var
-(
---v-secondary-base
-
-)
-
-&
-::after
-content
-
-""
-width
-
-0
-height
-
-0
-border-left
-
-5
-px solid
-
-var
-(
---v-secondary-base
-
-)
-border-top
-
-3
-px solid transparent
-border-bottom
-
-3
-px solid transparent
-position absolute
-top
-
-calc
-(
-50
-%
--
-2
-px
-
-)
-left
-
-9
-px
-
-            & :first-child h4
-margin-top
-
-0
-padding-top
-
-0
-border-top
-
-0
-
-@media (max-width: $ MQMobile)
-  .dropdown-wrapper
   .nav-dropdown
-  transition height
+    .dropdown-item
+      color var(--v-accent-base)
+      line-height 1.7rem
 
-.1s ease-out
-  overflow hidden
-  .dropdown-item
-  h4
-  border-top
+      h4
+        margin 0.45rem 0 0
+        border-top 1px solid var(--v-accent-base)
+        padding 0.45rem 1.5rem 0 0.7rem
+        color var(--v-primary-base)
+        font-size 15px
 
-0
-  margin-top
+      .dropdown-subitem-wrapper
+        padding 0
+        list-style none
 
-0
-  padding-top
+        .dropdown-subitem
+          font-size 0.9em
 
-0
+      a
+        display block
+        line-height 1.7rem
+        position relative
+        border-bottom none
+        font-weight 400
+        margin-bottom 0
+        padding 0 1.5rem 0 1.25rem
 
-  h4,
+        &:hover
+          color var(--v-secondary-base)
 
-& > a
-  font-size
+        &.router-link-active
+          color var(--v-secondary-base)
 
-15px
-  line-height
+          &::after
+            content ""
+            width 0
+            height 0
+            border-left 5px solid var(--v-secondary-base)
+            border-top 3px solid transparent
+            border-bottom 3px solid transparent
+            position absolute
+            top calc(50% - 2px)
+            left 9px
 
-2rem
- .dropdown-subitem
- font-size
+      &:first-child h4
+        margin-top 0
+        padding-top 0
+        border-top 0
 
-14px
-  padding-left
+@media (max-width: $MQMobile)
+  .dropdown-wrapper
+    .nav-dropdown
+      transition height .1s ease-out
+      overflow hidden
 
-1rem
+      .dropdown-item
+        h4
+          border-top 0
+          margin-top 0
+          padding-top 0
 
-  @media (min-width: $ MQMobile)
-    .dropdown-wrapper
-    height
+        h4, & > a
+          font-size 15px
+          line-height 2rem
 
-  1.8rem
+        .dropdown-subitem
+          font-size 14px
+          padding-left 1rem
 
-        & :hover .nav-dropdown,
+@media (min-width: $MQMobile)
+  .dropdown-wrapper
+    height 1.8rem
 
-  &.open .nav-dropdown
+    &:hover .nav-dropdown,
+    &.open .nav-dropdown
+      // override the inline style.
+      display block !important
 
-  // override the inline style.
-     display block
+    &.open:blur
+      display none
 
-  !important
-
-  &.open:blur
-   display none
-   .nav-dropdown
-   display none
-
-  // Avoid height shaked by clicking
-     height auto
-
-  !important
-    box-sizing border-box
-
-  ;
-    max-height
-
-  calc(100vh
-
-  - 2.7rem
-
-  )
-    overflow-y auto
-    position absolute
-    top
-
-  100%
-    right
-
-  0
-    background-color
-
-  var(--v-background-base
-
-  )
-    padding
-
-  0.6rem
-
-  0
-    border
-
-  1px solid
-
-  var(--v-accent-base
-
-  )
-    border-bottom-color
-
-  var(--v-accent-base
-
-  )
-    text-align left
-    border-radius
-
-  0.25rem
+    .nav-dropdown
+      display none
+      // Avoid height shaked by clicking
+      height auto !important
+      box-sizing border-box;
+      max-height calc(100vh - 2.7rem)
+      overflow-y auto
+      position absolute
+      top 100%
+      right 0
+      background-color var(--v-background-base)
+      padding 0.6rem 0
+      border 1px solid var(--v-accent-base)
+      border-bottom-color var(--v-accent-base)
+      text-align left
+      border-radius 0.25rem
       white-space nowrap
-      margin
-
-  0
+      margin 0
 </style>

@@ -29,50 +29,24 @@ export default {
 
 <style lang="stylus" scoped>
 .badge
-display inline-block
-font-size
+  display inline-block
+  font-size 14px
+  height 18px
+  line-height 18px
+  border-radius 3px
+  padding 0 6px
+  color white
+  background-color #42b983
 
-14
-px
-height
+  &.tip, &.green
+    background-color $badgeTipColor
 
-18
-px
-line-height
+  &.error
+    background-color $badgeErrorColor
 
-18
-px
-border-radius
+  &.warning, &.warn, &.yellow
+    background-color $badgeWarningColor
 
-3
-px
-padding
-
-0
-6
-px
-color white
-background-color #42b983
-
-&
-.tip,
-
-&
-.green
-background-color $ badgeTipColor
-  & .error
-background-color $ badgeErrorColor
-  & .warning,
-
-&
-.warn,
-
-&
-.yellow
-background-color $ badgeWarningColor
   & + &
-margin-left
-
-5
-px
+    margin-left 5px
 </style>

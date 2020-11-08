@@ -138,11 +138,5 @@ function flatten(items, res) {
 
 <style lang="stylus" scoped>
 .accentColor
-border-color
-
-var
-(
---v-primary-base
-
-)
+  border-color var(--v-primary-base)
 </style>

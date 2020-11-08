@@ -150,10 +150,6 @@ export default {
 
 <style lang="stylus" scoped>
 th, td
-border
-
-1
-px solid red
-
-!important
+  border 1px solid red !important
 </style>
+

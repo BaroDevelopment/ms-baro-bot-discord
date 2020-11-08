@@ -37,324 +37,80 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-$
-tipGreen
-
-=
-#42b983
-
-;
-$
-warningYellow
-
-=
-#ffe564
-
-;
-$
-dangerRed
-
-=
-#ff3331
-
-;
-$
-infoBlue
-
-=
-#00b3ff
-
-;
+$tipGreen = #42b983;
+$warningYellow = #ffe564;
+$dangerRed = #ff3331;
+$infoBlue = #00b3ff;
 
 img, .HintAvatar
-user-select: none
-max-width:
+  user-select: none
+  max-width: 70px !important
+  border-radius: 100%
+  float: left
+  margin-right: 30px
+  margin-top: 15px
 
-70
-px
-
-!important
-border-radius:
-
-100
-%
-float: left
-margin-right:
-
-30
-px
-margin-top:
-
-15
-px
 .custom-block
-.custom-block-title
-font-weight
+  .custom-block-title
+    font-weight 600
+    margin-top 10px
+    margin-bottom 7px
 
-600
-margin-top
+  &.tip, &.warning, &.danger, &.info
+    padding .1rem 1.5rem
+    border-left-width .3rem
+    border-left-style solid
+    margin 1rem 0
 
-10
-px
-margin-bottom
+  &.tip
+    color: lighten($tipGreen, 50%);
+    background-color: alpha($tipGreen, 0.15)
+    border-color $tipGreen
 
-7
-px
-    & .tip,
+    .custom-block-title
+      color: lighten($tipGreen, 20%);
 
-&
-.warning,
+    a
+      color darken($tipGreen, 20%);
 
-&
-.danger,
+  &.info
+    color: lighten($infoBlue, 50%)
+    background-color: alpha($infoBlue, 0.20) !important
+    border-color $infoBlue
 
-&
-.info
-padding
+    .custom-block-title
+      color: lighten($infoBlue, 20%);
 
-.1
-rem
+    a
+      color darken($infoBlue, 20%);
 
-1.5
-rem
-border-left-width
+  &.warning
+    background-color: alpha($warningYellow, 0.2) !important
+    border-color darken($warningYellow, 35%)
+    color: lighten($warningYellow, 40%);
 
-.3
-rem
-border-left-style solid
-margin
+    .custom-block-title
+      color darken($warningYellow, 30%)
 
-1
-rem
+    a
+      color darken($warningYellow, 20%);
 
-0
-&
-.tip
-color:
+  &.danger
+    background-color: desaturate(darken($dangerRed, 60%), 70%)
+    border-color darken($dangerRed, 20%)
+    color: lighten($dangerRed, 50%);
 
-lighten
-(
-$
-tipGreen,
+    .custom-block-title
+      color: darken($dangerRed, 5%);
 
-50
-%
-)
-;
-background-color:
-
-alpha
-(
-$
-tipGreen,
-
-0.15
-)
-border-color $ tipGreen
-.custom-block-title
-color:
-
-lighten
-(
-$
-tipGreen,
-
-20
-%
-)
-;
-a
-color
-
-darken
-(
-$
-tipGreen,
-
-20
-%
-)
-;
-&
-.info
-color:
-
-lighten
-(
-$
-infoBlue,
-
-50
-%
-)
-background-color:
-
-alpha
-(
-$
-infoBlue,
-
-0.20
-)
-!important
-border-color $ infoBlue
-.custom-block-title
-color:
-
-lighten
-(
-$
-infoBlue,
-
-20
-%
-)
-;
-a
-color
-
-darken
-(
-$
-infoBlue,
-
-20
-%
-)
-;
-&
-.warning
-background-color:
-
-alpha
-(
-$
-warningYellow,
-
-0.2
-)
-!important
-border-color
-
-darken
-(
-$
-warningYellow,
-
-35
-%
-)
-color:
-
-lighten
-(
-$
-warningYellow,
-
-40
-%
-)
-;
-.custom-block-title
-color
-
-darken
-(
-$
-warningYellow,
-
-30
-%
-)
-a
-color
-
-darken
-(
-$
-warningYellow,
-
-20
-%
-)
-;
-&
-.danger
-background-color:
-
-desaturate
-(
-darken
-(
-$
-dangerRed,
-
-60
-%
-)
-,
-70
-%
-)
-border-color
-
-darken
-(
-$
-dangerRed,
-
-20
-%
-)
-color:
-
-lighten
-(
-$
-dangerRed,
-
-50
-%
-)
-;
-.custom-block-title
-color:
-
-darken
-(
-$
-dangerRed,
-
-5
-%
-)
-;
-a
-color:
-
-darken
-(
-$
-dangerRed,
-
-5
-%
-)
-;
+    a
+      color: darken($dangerRed, 5%);
 
 
-@media (max-width: $ MQMobile)
+@media (max-width: $MQMobile)
   .custom-block
-  img
-  display: block
-  margin:
-
-15px auto
-
-15px
-
-0 !important
-  float: none
-
-!important
+    img
+      display: block
+      margin: 15px auto 15px 0 !important
+      float: none !important
 </style>

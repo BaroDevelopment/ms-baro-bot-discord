@@ -72,370 +72,76 @@ export default {
 
 <style lang="stylus" scoped>
 
-$
-noteBlue
-
-=
-#0050ff
-
-;
-$
-abstractYellow
-
-=
-#c5d845
-
-;
-$
-infoBlue
-
-=
-#19d8f5
-
-;
-$
-tipGreen
-
-=
-#00bfa5
-
-;
-$
-checkGreen
-
-=
-#00c853
-
-;
-$
-questionGreen
-
-=
-#64dd17
-
-;
-$
-warnOrange
-
-=
-#ff9100
-
-;
-$
-failRed
-
-=
-#ff5252
-
-$
-errorRed
-
-=
-#c2185b
-
-$
-bugPurple
-
-=
-#e040fb
-
-$
-examplePurple
-
-=
-#651fff
-
-$
-quoteGrey
-
-=
-#9e9e9e
-.v-expansion-panel& .note
-background-color
-
-alpha
-(
-$
-noteBlue,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-noteBlue,
-
-50
-%
-)
-border-left
-
-3
-px solid $ noteBlue
-.v-expansion-panel& .abstract
-background-color
-
-alpha
-(
-$
-abstractYellow,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-abstractYellow,
-
-50
-%
-)
-border-left
-
-3
-px solid $ abstractYellow
-.v-expansion-panel& .information
-background-color
-
-alpha
-(
-$
-infoBlue,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-infoBlue,
-
-50
-%
-)
-border-left
-
-3
-px solid $ infoBlue
-.v-expansion-panel& .tip
-background-color
-
-alpha
-(
-$
-tipGreen,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-tipGreen,
-
-50
-%
-)
-border-left
-
-3
-px solid $ tipGreen
-.v-expansion-panel& .check
-background-color
-
-alpha
-(
-$
-checkGreen,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-checkGreen,
-
-50
-%
-)
-border-left
-
-3
-px solid $ checkGreen
-.v-expansion-panel& .question
-background-color
-
-alpha
-(
-$
-questionGreen,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-questionGreen,
-
-50
-%
-)
-border-left
-
-3
-px solid $ questionGreen
-.v-expansion-panel& .warn
-background-color
-
-alpha
-(
-$
-warnOrange,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-warnOrange,
-
-50
-%
-)
-border-left
-
-3
-px solid $ warnOrange
-.v-expansion-panel& .fail
-background-color
-
-alpha
-(
-$
-failRed,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-failRed,
-
-50
-%
-)
-border-left
-
-3
-px solid $ failRed
-.v-expansion-panel& .err
-background-color
-
-alpha
-(
-$
-errorRed,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-errorRed,
-
-50
-%
-)
-border-left
-
-3
-px solid $ errorRed
-.v-expansion-panel& .bug
-background-color
-
-alpha
-(
-$
-bugPurple,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-bugPurple,
-
-50
-%
-)
-border-left
-
-3
-px solid $ bugPurple
-.v-expansion-panel& .example
-background-color
-
-alpha
-(
-$
-examplePurple,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-examplePurple,
-
-50
-%
-)
-border-left
-
-3
-px solid $ examplePurple
-.v-expansion-panel& .quote
-background-color
-
-alpha
-(
-$
-quoteGrey,
-
-0.20
-)
-color:
-
-lighten
-(
-$
-quoteGrey,
-
-50
-%
-)
-border-left
-
-3
-px solid $ quoteGrey
+$noteBlue = #0050ff;
+$abstractYellow = #c5d845;
+$infoBlue = #19d8f5;
+$tipGreen = #00bfa5;
+$checkGreen = #00c853;
+$questionGreen = #64dd17;
+$warnOrange = #ff9100;
+$failRed = #ff5252
+$errorRed = #c2185b
+$bugPurple = #e040fb
+$examplePurple = #651fff
+$quoteGrey = #9e9e9e
+
+.v-expansion-panel&.note
+  background-color alpha($noteBlue, 0.20)
+  color: lighten($noteBlue, 50%)
+  border-left 3px solid $noteBlue
+
+.v-expansion-panel&.abstract
+  background-color alpha($abstractYellow, 0.20)
+  color: lighten($abstractYellow, 50%)
+  border-left 3px solid $abstractYellow
+
+.v-expansion-panel&.information
+  background-color alpha($infoBlue, 0.20)
+  color: lighten($infoBlue, 50%)
+  border-left 3px solid $infoBlue
+
+.v-expansion-panel&.tip
+  background-color alpha($tipGreen, 0.20)
+  color: lighten($tipGreen, 50%)
+  border-left 3px solid $tipGreen
+
+.v-expansion-panel&.check
+  background-color alpha($checkGreen, 0.20)
+  color: lighten($checkGreen, 50%)
+  border-left 3px solid $checkGreen
+
+.v-expansion-panel&.question
+  background-color alpha($questionGreen, 0.20)
+  color: lighten($questionGreen, 50%)
+  border-left 3px solid $questionGreen
+
+.v-expansion-panel&.warn
+  background-color alpha($warnOrange, 0.20)
+  color: lighten($warnOrange, 50%)
+  border-left 3px solid $warnOrange
+
+.v-expansion-panel&.fail
+  background-color alpha($failRed, 0.20)
+  color: lighten($failRed, 50%)
+  border-left 3px solid $failRed
+
+.v-expansion-panel&.err
+  background-color alpha($errorRed, 0.20)
+  color: lighten($errorRed, 50%)
+  border-left 3px solid $errorRed
+
+.v-expansion-panel&.bug
+  background-color alpha($bugPurple, 0.20)
+  color: lighten($bugPurple, 50%)
+  border-left 3px solid $bugPurple
+
+.v-expansion-panel&.example
+  background-color alpha($examplePurple, 0.20)
+  color: lighten($examplePurple, 50%)
+  border-left 3px solid $examplePurple
+
+.v-expansion-panel&.quote
+  background-color alpha($quoteGrey, 0.20)
+  color: lighten($quoteGrey, 50%)
+  border-left 3px solid $quoteGrey
 </style>

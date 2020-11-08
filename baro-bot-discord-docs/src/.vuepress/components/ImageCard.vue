@@ -66,114 +66,28 @@ export default {
 <style lang="stylus">
 
 .title
-width:
-
-100
-%
-;
-font-size:
-
-14
-px
-
-!important
-;
-display: flex
-
-;
-align-items: center
-
-;
-justify-content: center
-
-;
-background-color:
-
-rgba
-(
-0
-,
-0
-,
-0
-,
-0.6
-)
-;
-height:
-
-30
-px
-
-;
-color: white
-
-;
-position: absolute
-
-;
-bottom:
-
-0
-;
-left:
-
-0
-;
+  width: 100%;
+  font-size: 14px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 30px;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  left: 0;
 
 .hoverTitle
-width:
-
-100
-%
-;
-font-size:
-
-14
-px
-
-!important
-;
-display: flex
-
-;
-align-items: center
-
-;
-justify-content: center
-
-;
-background-color:
-
-rgba
-(
-0
-,
-0
-,
-0
-,
-0.6
-)
-;
-height:
-
-30
-px
-
-;
-color: white
-
-;
-position: absolute
-
-;
-left:
-
-0
-;
-top:
-
-0
-;
+  width: 100%;
+  font-size: 14px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  height: 30px;
+  color: white;
+  position: absolute;
+  left: 0;
+  top: 0;
 </style>

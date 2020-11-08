@@ -230,15 +230,9 @@ function css(el, property) {
 
 <style lang="stylus" scoped>
 .docsTitle
-color
+  color var(--v-accent-base)
 
-var
-(
---v-accent-base
-
-)
-
-@media (max-width: $ MQMobile)
+@media (max-width: $MQMobile)
   .can-hide
-  display none
+    display none
 </style>

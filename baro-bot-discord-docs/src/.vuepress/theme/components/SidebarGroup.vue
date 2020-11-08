@@ -64,172 +64,79 @@ export default {
 
 <style lang="stylus">
 .sidebar-group
-.sidebar-group
-padding-left
+  .sidebar-group
+    padding-left 0.5em
 
-0.5
-em
+  &:not(.collapsable)
+    .sidebar-heading:not(.clickable)
+      cursor auto
+      color inherit
 
-    & :not(.collapsable)
-.sidebar-heading:not(.clickable)
-cursor auto
-color inherit
+  // refine styles of nested sidebar groups
 
-/
-/
-refine styles of nested sidebar groups
+  &.is-sub-group
+    padding-left 0
 
-    & .is-sub-group
-padding-left
+    & > .sidebar-heading
+      font-size 0.95em
+      line-height 1.4
+      font-weight normal
+      padding-left 2rem
 
-0
+      &:not(.clickable)
+        opacity 0.5
 
-&
-> .sidebar-heading
-font-size
+    & > .sidebar-group-items
+      padding-left 1rem
 
-0.95
-em
-line-height
+      & > li > .sidebar-link
+        font-size: 0.95em;
+        border-left none
 
-1.4
-font-weight normal
-padding-left
+  &.depth-2
+    & > .sidebar-heading
+      border-left none
 
-2
-rem
+  .sidebar-heading
+    color var(--v-accent) !important
+    cursor pointer
+    font-size 1em
+    font-weight bold
+    // text-transform uppercase
+    padding 0.35rem 1.5rem 0.35rem 1.25rem
+    width 100%
+    box-sizing border-box
+    margin 0
+    border-left 0.25rem solid transparent
+    display flex
+    align-items center
+    justify-content flex-start
 
-            & :not(.clickable)
-opacity
+    box-icon
+      max-width 20px
+      margin-bottom -4px
+      margin-left 4px
 
-0.5
+    &.open
+      box-icon
+        transform rotate(90deg)
 
-&
-> .sidebar-group-items
-padding-left
+    .arrow
+      position relative
+      top -0.12em
+      left 0.5em
 
-1
-rem
+    &.clickable
+      &.active
+        font-weight 600
+        color $accentColor
+        border-left-color $accentColor
 
-            & > li > .sidebar-link
-font-size:
+      &:hover
+        color $accentColor
 
-0.95
-em
-
-;
-border-left none
-
-    & .depth-2
-
-&
-> .sidebar-heading
-border-left none
-.sidebar-heading
-color
-
-var
-(
---v-accent
-
-)
-!important
-cursor pointer
-font-size
-
-1
-em
-font-weight bold
-
-/
-/
-text-transform uppercase
-padding
-
-0.35
-rem
-
-1.5
-rem
-
-0.35
-rem
-
-1.25
-rem
-width
-
-100
-%
-box-sizing border-box
-margin
-
-0
-border-left
-
-0.25
-rem solid transparent
-display flex
-align-items center
-justify-content flex-start
-box-icon
-max-width
-
-20
-px
-margin-bottom
-
--
-4
-px
-margin-left
-
-4
-px
-
-        & .open
-box-icon
-transform
-
-rotate
-(
-90
-deg
-
-)
-
-.arrow
-position relative
-top
-
--
-0.12
-em
-left
-
-0.5
-em
-
-        & .clickable
-
-&
-.active
-font-weight
-
-600
-color $ accentColor
-border-left-color $ accentColor
-
-            & :hover
-color $ accentColor
 .sidebar-group-items
-transition height
-
-.1
-s ease-out
-font-size
-
-0.95
-em
-overflow hidden
+  transition height .1s ease-out
+  font-size 0.95em
+  overflow hidden
 </style>

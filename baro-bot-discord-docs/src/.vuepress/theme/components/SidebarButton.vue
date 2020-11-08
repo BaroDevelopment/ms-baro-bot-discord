@@ -18,41 +18,21 @@
 
 <style lang="stylus" scoped>
 .sidebar-button
-cursor pointer
-display none
-width
+  cursor pointer
+  display none
+  width 1.25rem
+  height 1.25rem
+  position absolute
+  padding 0.6rem
+  top 0.6rem
+  left 1rem
 
-1.25
-rem
-height
+  .icon
+    display block
+    width 1.25rem
+    height 1.25rem
 
-1.25
-rem
-position absolute
-padding
-
-0.6
-rem
-top
-
-0.6
-rem
-left
-
-1
-rem
-.icon
-display block
-width
-
-1.25
-rem
-height
-
-1.25
-rem
-
-@media (max-width: $ MQMobile)
+@media (max-width: $MQMobile)
   .sidebar-button
-  display block
+    display block
 </style>

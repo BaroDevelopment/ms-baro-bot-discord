@@ -64,248 +64,110 @@ export default {
 
 <style lang="stylus">
 .home
-padding $ navbarHeight
+  padding $navbarHeight 2rem 0
+  max-width $homePageWidth
+  margin 0px auto
+  display block
 
-2
-rem
+  .hero
+    text-align center
 
-0
-max-width $ homePageWidth
-margin
+    img
+      max-width: 100%
+      max-height 280px
+      display block
+      margin 3rem auto 1.5rem
 
-0
-px auto
-display block
-.hero
-text-align center
-img
-max-width:
+    h1
+      font-size 3rem
 
-100
-%
-max-height
+    h1, .description, .action
+      margin 1.8rem auto
 
-280
-px
-display block
-margin
+    .description
+      max-width 35rem
+      font-size 1.6rem
+      line-height 1.3
+      color var(--v-accent-base)
 
-3
-rem auto
+    .action-button
+      a
+        color #fff
+      display inline-block
+      font-size 1.2rem
+      background-color var(--v-primary-base)
+      padding 0.8rem 1.6rem
+      border-radius 4px
+      transition background-color .1s ease
+      box-sizing border-box
 
-1.5
-rem
-h1
-font-size
+      &:hover
+        background-color var(--v-secondary-base)
 
-3
-rem
-h1, .description, .action
-margin
-
-1.8
-rem auto
-.description
-max-width
-
-35
-rem
-font-size
-
-1.6
-rem
-line-height
-
-1.3
-color
-
-var
-(
---v-accent-base
-
-)
-.action-button
-a
-color #fff
-display inline-block
-font-size
-
-1.2
-rem
-background-color
-
-var
-(
---v-primary-base
-
-)
-padding
-
-0.8
-rem
-
-1.6
-rem
-border-radius
-
-4
-px
-transition background-color
-
-.1
-s ease
-box-sizing border-box
-      & :hover
-background-color
-
-var
-(
---v-secondary-base
-
-)
-.features
-border-top
-
-1
-px solid
-
-var
-(
---v-secondary-base
-
-)
-padding
-
-1.2
-rem
-
-0
-margin-top
-
-2.5
-rem
-display flex
-flex-wrap wrap
-align-items flex-start
-align-content stretch
-justify-content space-between
-.feature
-flex-grow
-
-1
-flex-basis
-
-30
-%
-max-width
-
-30
-%
-h2
-font-size
-
-1.4
-rem
-font-weight
-
-500
-border-bottom none
-padding-bottom
-
-0
-color
-
-var
-(
---v-accent-base
-
-)
-p
-color
-
-var
-(
---v-accent-base
-
-)
-.footer
-padding
-
-2.5
-rem
-border-top
-
-1
-px solid
-
-var
-(
---v-secondary-base
-
-)
-text-align center
-color
-
-var
-(
---v-accent-base
-
-)
-
-@media (max-width: $ MQMobile)
-  .home
   .features
-  flex-direction column
+    border-top 1px solid var(--v-secondary-base)
+    padding 1.2rem 0
+    margin-top 2.5rem
+    display flex
+    flex-wrap wrap
+    align-items flex-start
+    align-content stretch
+    justify-content space-between
+
   .feature
-  max-width
+    flex-grow 1
+    flex-basis 30%
+    max-width 30%
 
-100%
-  padding
+    h2
+      font-size 1.4rem
+      font-weight 500
+      border-bottom none
+      padding-bottom 0
+      color var(--v-accent-base)
 
-0 2.5rem
+    p
+      color var(--v-accent-base)
 
-  @media (max-width: $ MQMobileNarrow)
-    .home
-    padding-left
+  .footer
+    padding 2.5rem
+    border-top 1px solid var(--v-secondary-base)
+    text-align center
+    color var(--v-accent-base)
 
-  1.5rem
-     padding-right
+@media (max-width: $MQMobile)
+  .home
+    .features
+      flex-direction column
 
-  1.5rem
-     .hero
-     img
-     max-height
+    .feature
+      max-width 100%
+      padding 0 2.5rem
 
-  210px
-     margin
+@media (max-width: $MQMobileNarrow)
+  .home
+    padding-left 1.5rem
+    padding-right 1.5rem
 
-  2rem auto
+    .hero
+      img
+        max-height 210px
+        margin 2rem auto 1.2rem
 
-  1.2rem
-     h1
-     font-size
+      h1
+        font-size 2rem
 
-  2rem
-   h1, .description, .action
-  margin
+      h1, .description, .action
+        margin 1.2rem auto
 
-  1.2rem auto
-     .description
-     font-size
+      .description
+        font-size 1.2rem
 
-  1.2rem
-     .action-button
-     font-size
+      .action-button
+        font-size 1rem
+        padding 0.6rem 1.2rem
 
-  1rem
-   padding
-
-  0.6rem
-
-  1.2rem
-     .feature
-     h2
-     font-size
-
-  1.25rem
+    .feature
+      h2
+        font-size 1.25rem
 </style>

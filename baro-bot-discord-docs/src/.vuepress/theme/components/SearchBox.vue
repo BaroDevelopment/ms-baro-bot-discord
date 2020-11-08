@@ -210,105 +210,40 @@ export default {
 <style lang="stylus" scoped>
 
 .suggestions
-background-color:
+  background-color: var(--v-background-base)
+  border-color: var(--v-secondary-base) !important
+  z-index: 1
+  width 20rem
+  position absolute
+  top 3rem
+  border 1px solid darken($borderColor, 10%)
+  border-radius 6px
+  padding 0.4rem
+  list-style-type none
 
-var
-(
---v-background-base
+  &.align-right
+    right 0
 
-)
-border-color:
-
-var
-(
---v-secondary-base
-
-)
-!important
-z-index :
-
-1
-width
-
-20
-rem
-position absolute
-top
-
-3
-rem
-border
-
-1
-px solid
-
-darken
-(
-$
-borderColor,
-
-10
-%
-)
-border-radius
-
-6
-px
-padding
-
-0.4
-rem
-list-style-type none
-  & .align-right
-right
-
-0
 .suggestion
-line-height
+  line-height 1.4
+  padding 0.4rem 0.6rem
+  border-radius 4px
+  cursor pointer
 
-1.4
-padding
+  a
+    white-space normal
+    color var(--v-accent-base)
 
-0.4
-rem
+    .page-title
+      font-weight 600
 
-0.6
-rem
-border-radius
+    .header
+      font-size 0.9em
+      margin-left 0.25em
 
-4
-px
-cursor pointer
-a
-white-space normal
-color
+  &.focused
+    background-color: var(--v-primary-base)
 
-var
-(
---v-accent-base
-
-)
-.page-title
-font-weight
-
-600
-.header
-font-size
-
-0.9
-em
-margin-left
-
-0.25
-em
-  & .focused
-background-color:
-
-var
-(
---v-primary-base
-
-)
-a
-color: white
+    a
+      color: white
 </style>
