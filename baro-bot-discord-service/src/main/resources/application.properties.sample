@@ -1,0 +1,19 @@
+# DEFAULT LOCAL PROPERTIES
+production=false
+debug=false
+logging.level.org.springframework.web=INFO
+logging.level.root=INFO
+server.port=5000
+
+# JPA
+spring.datasource.url=jdbc:postgresql://localhost:5432/DATABASE_NAME
+spring.datasource.username=
+spring.datasource.password=
+## drop n create table again, good for testing, comment this in production
+spring.jpa.hibernate.ddl-auto=create
+
+# DISCORD BOT
+token=
+activity=
+prefix=?
+owner.ids=

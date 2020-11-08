@@ -1,0 +1,28 @@
+{
+  "name": "docs",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "authors": {
+    "name": "",
+    "email": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BaroDevelopment/ms-baro-bot-discord"
+  },
+  "scripts": {
+    "dev": "vuepress dev src",
+    "build": "set NODE_OPTIONS=--max_old_space_size=8192 & vuepress build src",
+    "deploy": "sh deploy.sh"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.5.3"
+  },
+  "dependencies": {
+    "fibers": "^5.0.0",
+    "sass": "^1.28.0",
+    "vuetify": "^2.3.16"
+  }
+}

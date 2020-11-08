@@ -1,0 +1,172 @@
+@require './config'
+@require './code'
+@require './custom-blocks'
+@require './arrow'
+@require './wrapper'
+@require './toc'
+
+@font-face
+  font-family: "Poppins"
+  src: url("/Poppins/Poppins-Regular.ttf")
+  font-weight: 400
+  font-style: normal
+
+.v-application
+  color var(--v-accent-base) !important
+
+body
+  font-family "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
+  -webkit-font-smoothing antialiased
+  -moz-osx-font-smoothing grayscalea
+  font-size 16px
+
+input
+  font-family "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
+
+button
+  font-family "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif
+
+ul li .sidebar-link
+  color var(--v-accent-base)
+
+{$contentClass}.custom
+  padding 0
+  margin 0
+
+  img
+    max-width 100%
+
+a
+  font-weight 500
+  color $accentColor
+  text-decoration none
+
+p a code
+  font-weight 400
+  color $accentColor
+
+kbd
+  background #eee
+  border solid 0.15rem #ddd
+  border-bottom solid 0.25rem #ddd
+  border-radius 0.15rem
+  padding 0 0.15em
+
+blockquote
+  font-size 1rem
+  color var(--v-accent-base);
+  border-left .4rem solid var(--v-primary-base)
+  margin 1rem 0
+  padding 1rem 1rem .15rem 1rem
+  background-color var(--v-background-base)
+
+  & > p
+    margin 0
+
+ul, ol
+  padding-left 1.2em
+
+strong
+  font-weight 600
+
+h1, h2, h3, h4, h5, h6
+  font-weight 600
+  line-height 1.25
+
+  {$contentClass}:not(.custom) > &
+    margin-top (0.5rem - $navbarHeight)
+    padding-top ($navbarHeight + 1rem)
+    margin-bottom 0
+
+    &:first-child
+      margin-top -1.5rem
+      margin-bottom 1rem
+
+      + p, + pre, + .custom-block
+        margin-top 2rem
+
+  &:hover .header-anchor
+    opacity: 1
+
+h1
+  font-size 2.2rem
+
+h2
+  font-size 1.65rem
+  padding-bottom .3rem
+/* border-bottom 1px solid $borderColor */
+
+h3
+  font-size 1.35rem
+
+a.header-anchor
+  font-size 0.85em
+  float left
+  margin-left -0.87em
+  padding-right 0.23em
+  margin-top 0.125em
+  opacity 0
+
+  &:hover
+    text-decoration none
+
+code, kbd, .line-number
+  font-family source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace
+
+p, ul, ol
+  line-height 1.7
+
+hr
+  border 0
+  border-top 1px solid $borderColor
+
+table
+  overflow-x: auto
+
+tr
+  border-top 1px solid #dfe2e5
+
+  &:nth-child(2n)
+    background-color var(--v-background-darken1)
+
+th, td
+  padding .6em 1em
+
+.theme-container
+  &.no-navbar
+    {$contentClass}:not(.custom) > h1, h2, h3, h4, h5, h6
+      margin-top 1.5rem
+      padding-top 0
+
+    .sidebar
+      top 0
+
+@media (min-width: ($MQMobile + 1px))
+  .theme-container.no-sidebar
+    .sidebar
+      display none
+
+    .page
+      padding-left 0
+
+@require 'mobile.styl'
+
+
+/* width */
+::-webkit-scrollbar
+  width: 8px
+  height: 8px
+
+/* Track */
+::-webkit-scrollbar-track
+  /*-webkit-box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.3);*/
+  background-color: var(--v-background-base)
+
+/* Handle */
+::-webkit-scrollbar-thumb
+  background-color: rgba(212, 212, 212, 0.43)
+  border: 2px solid #7d7d7d
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover
+  /*background: rgba(96, 96, 96, 0.82);*/

@@ -1,0 +1,23 @@
+<assembly xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+          xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+    <id>mircoservice-assets</id>
+
+    <dependencySets>
+        <dependencySet>
+            <includes>
+                <include>com.baro.bot.discord:baro-bot-discord-service</include>
+            </includes>
+            <outputDirectory>.</outputDirectory>
+            <outputFileNameMapping>baro-bot-discord.jar</outputFileNameMapping>
+            <useProjectArtifact>false</useProjectArtifact>
+        </dependencySet>
+    </dependencySets>
+
+    <files>
+        <file>
+            <source>${project.basedir}/src/main/docker/application.properties</source>
+            <outputDirectory>./config</outputDirectory>
+        </file>
+    </files>
+</assembly>

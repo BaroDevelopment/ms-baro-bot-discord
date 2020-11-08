@@ -1,0 +1,29 @@
+version: "3.8"
+services:
+  discord-bot:
+    image: barodev/baro-bot-discord:0.0.1-SNAPSHOT
+    container_name: discord-bot
+    ports:
+      - "5000:5000"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+    networks:
+      - local-network
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - postgres-data-volume:/var/lib/postgresql/data
+    networks:
+      - local-network
+networks:
+  local-network:
+volumes:
+  postgres-data-volume:

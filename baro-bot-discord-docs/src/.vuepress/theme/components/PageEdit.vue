@@ -1,0 +1,106 @@
+<template>
+  <v-row class="hidden-xs-only mt-5" justify="space-between">
+    <v-col>
+      <a :href="editLink" rel="noopener noreferrer" target="_blank">
+        <v-btn v-if="editLink" outlined rounded text>
+          <v-icon left>mdi-pencil</v-icon>
+          {{ editLinkText }}
+          <OutboundLink/>
+        </v-btn>
+      </a>
+    </v-col>
+    <v-col>
+      <v-chip class="float-right" outlined>
+        {{ lastUpdatedText }}
+        {{ lastUpdated }}
+      </v-chip>
+    </v-col>
+  </v-row>
+</template>
+
+<script>
+import isNil from "lodash/isNil";
+import {endingSlashRE, outboundRE} from "../util";
+
+export default {
+  name: "PageEdit",
+
+  computed: {
+    lastUpdated() {
+      return this.$page.lastUpdated;
+    },
+
+    lastUpdatedText() {
+      if (typeof this.$themeLocaleConfig.lastUpdated === "string") {
+        return this.$themeLocaleConfig.lastUpdated;
+      }
+      if (typeof this.$site.themeConfig.lastUpdated === "string") {
+        return this.$site.themeConfig.lastUpdated;
+      }
+      return "Last Updated";
+    },
+
+    editLink() {
+      const showEditLink = isNil(this.$page.frontmatter.editLink)
+          ? this.$site.themeConfig.editLinks
+          : this.$page.frontmatter.editLink;
+
+      const {
+        repo,
+        docsDir = "",
+        docsBranch = "master",
+        docsRepo = repo
+      } = this.$site.themeConfig;
+
+      if (showEditLink && docsRepo && this.$page.relativePath) {
+        return this.createEditLink(
+            repo,
+            docsRepo,
+            docsDir,
+            docsBranch,
+            this.$page.relativePath
+        );
+      }
+      return null;
+    },
+
+    editLinkText() {
+      return (
+          this.$themeLocaleConfig.editLinkText ||
+          this.$site.themeConfig.editLinkText ||
+          `Edit this page`
+      );
+    }
+  },
+
+  methods: {
+    createEditLink(repo, docsRepo, docsDir, docsBranch, path) {
+      const bitbucket = /bitbucket.org/;
+      if (bitbucket.test(repo)) {
+        const base = outboundRE.test(docsRepo) ? docsRepo : repo;
+        return (
+            base.replace(endingSlashRE, "") +
+            `/src` +
+            `/${docsBranch}/` +
+            (docsDir ? docsDir.replace(endingSlashRE, "") + "/" : "") +
+            path +
+            `?mode=edit&spa=0&at=${docsBranch}&fileviewer=file-view-default`
+        );
+      }
+
+      const base = outboundRE.test(docsRepo)
+          ? docsRepo
+          : `https://github.com/${docsRepo}`;
+      return (
+          base.replace(endingSlashRE, "") +
+          `/edit` +
+          `/${docsBranch}/` +
+          (docsDir ? docsDir.replace(endingSlashRE, "") + "/" : "") +
+          path
+      );
+    }
+  }
+};
+</script>
+
+<style lang="stylus" scoped></style>

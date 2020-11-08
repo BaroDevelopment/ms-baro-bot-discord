@@ -1,0 +1,360 @@
+<template>
+  <div :class="type" class="custom-block" wfd-id="239">
+    <img v-if="img" :src="img" class="HintAvatar"/>
+    <p v-if="title" class="custom-block-title">{{ title }}</p>
+    <p class="mt-2">{{ text }}</p>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Hint",
+  data() {
+    return {
+      tipGreen: "#42b983",
+      warningYellow: "#ffe564",
+      dangerRed: "#ff3331",
+      infoBlue: "#00b3ff"
+    };
+  },
+  props: {
+    type: {
+      type: String,
+      default: "info"
+    },
+    text: {
+      type: String,
+      required: true
+    },
+    title: {
+      type: String
+    },
+    img: {
+      type: String
+    }
+  }
+};
+</script>
+
+<style lang="stylus" scoped>
+$
+tipGreen
+
+=
+#42b983
+
+;
+$
+warningYellow
+
+=
+#ffe564
+
+;
+$
+dangerRed
+
+=
+#ff3331
+
+;
+$
+infoBlue
+
+=
+#00b3ff
+
+;
+
+img, .HintAvatar
+user-select: none
+max-width:
+
+70
+px
+
+!important
+border-radius:
+
+100
+%
+float: left
+margin-right:
+
+30
+px
+margin-top:
+
+15
+px
+.custom-block
+.custom-block-title
+font-weight
+
+600
+margin-top
+
+10
+px
+margin-bottom
+
+7
+px
+    & .tip,
+
+&
+.warning,
+
+&
+.danger,
+
+&
+.info
+padding
+
+.1
+rem
+
+1.5
+rem
+border-left-width
+
+.3
+rem
+border-left-style solid
+margin
+
+1
+rem
+
+0
+&
+.tip
+color:
+
+lighten
+(
+$
+tipGreen,
+
+50
+%
+)
+;
+background-color:
+
+alpha
+(
+$
+tipGreen,
+
+0.15
+)
+border-color $ tipGreen
+.custom-block-title
+color:
+
+lighten
+(
+$
+tipGreen,
+
+20
+%
+)
+;
+a
+color
+
+darken
+(
+$
+tipGreen,
+
+20
+%
+)
+;
+&
+.info
+color:
+
+lighten
+(
+$
+infoBlue,
+
+50
+%
+)
+background-color:
+
+alpha
+(
+$
+infoBlue,
+
+0.20
+)
+!important
+border-color $ infoBlue
+.custom-block-title
+color:
+
+lighten
+(
+$
+infoBlue,
+
+20
+%
+)
+;
+a
+color
+
+darken
+(
+$
+infoBlue,
+
+20
+%
+)
+;
+&
+.warning
+background-color:
+
+alpha
+(
+$
+warningYellow,
+
+0.2
+)
+!important
+border-color
+
+darken
+(
+$
+warningYellow,
+
+35
+%
+)
+color:
+
+lighten
+(
+$
+warningYellow,
+
+40
+%
+)
+;
+.custom-block-title
+color
+
+darken
+(
+$
+warningYellow,
+
+30
+%
+)
+a
+color
+
+darken
+(
+$
+warningYellow,
+
+20
+%
+)
+;
+&
+.danger
+background-color:
+
+desaturate
+(
+darken
+(
+$
+dangerRed,
+
+60
+%
+)
+,
+70
+%
+)
+border-color
+
+darken
+(
+$
+dangerRed,
+
+20
+%
+)
+color:
+
+lighten
+(
+$
+dangerRed,
+
+50
+%
+)
+;
+.custom-block-title
+color:
+
+darken
+(
+$
+dangerRed,
+
+5
+%
+)
+;
+a
+color:
+
+darken
+(
+$
+dangerRed,
+
+5
+%
+)
+;
+
+
+@media (max-width: $ MQMobile)
+  .custom-block
+  img
+  display: block
+  margin:
+
+15px auto
+
+15px
+
+0 !important
+  float: none
+
+!important
+</style>

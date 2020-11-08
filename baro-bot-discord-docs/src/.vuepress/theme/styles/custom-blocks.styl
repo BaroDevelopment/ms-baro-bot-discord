@@ -1,0 +1,117 @@
+$tipGreen = #42b983;
+$cautionYellow = #ffe564;
+$dangerRed = #ff3331;
+$informationBlue = #00b3ff;
+
+pre.vue-container
+  border-left-width: .5rem;
+  border-left-style: solid;
+  border-color: var(--v-secondary-base);
+  border-radius: 0px;
+  & > code
+    font-size: 14px !important;
+    & > p
+      margin: -5px 0 -20px 0;
+    code
+      background-color: $accentColor !important;
+      padding: 1px 1px;
+      border-radius: 3px;
+      color #000
+    em
+      color #808080
+      font-weight light
+
+
+.theme--light
+  .custom-block
+    &.tip
+      background-color #f3f5f7
+      border-color #42b983
+    &.caution
+      background-color rgba(255,229,100,.3)
+      border-color darken(#ffe564, 35%)
+      color darken(#ffe564, 70%)
+      .custom-block-title
+        color darken(#ffe564, 50%)
+      a
+        color $textColor
+    &.danger
+      background-color #ffe6e6
+      border-color darken(red, 20%)
+      color darken(red, 70%)
+      .custom-block-title
+        color darken(red, 40%)
+      a
+        color $textColor
+    &.details
+      background-color #eee
+
+.theme--dark
+  .custom-block
+    &.tip
+      color: lighten($tipGreen, 50%);
+      background-color: alpha($tipGreen, 0.15)
+      border-color $tipGreen
+      .custom-block-title
+        color: lighten($tipGreen, 20%);
+      a
+        color darken($tipGreen, 20%);
+    &.danger
+      background-color: desaturate(darken($dangerRed, 60%), 70%)
+      border-color darken($dangerRed, 20%)
+      color: lighten($dangerRed, 50%);
+      .custom-block-title
+        color: darken($dangerRed, 5%);
+      a
+        color: darken($dangerRed, 5%);
+    &.information
+      color: lighten($informationBlue, 50%)
+      background-color: alpha($informationBlue, 0.20)
+      border-color $informationBlue
+      .custom-block-title
+        color: lighten($informationBlue, 20%);
+      a
+        color darken($informationBlue, 20%);
+    &.caution
+      background-color: alpha($cautionYellow, 0.2)
+      border-color darken($cautionYellow, 35%)
+      color: lighten($cautionYellow, 40%);
+      .custom-block-title
+        color darken($cautionYellow, 30%)
+      a
+        color darken($cautionYellow, 20%);
+    &.details
+      background-color rgba(51, 51, 51, 0.89)
+
+.custom-block
+  .custom-block-title
+    font-weight 600
+    margin-top 10px
+    margin-bottom 7px
+  &.tip, &.caution, &.danger, &.information
+    padding 0.1rem 0.5rem 0.1rem 1rem
+    border-left-width .2rem
+    border-left-style solid
+    margin 1rem 0
+  &.details
+    display block
+    position relative
+    border-radius 2px
+    margin 1.6em 0
+    padding 1.6em
+    h4
+      margin-top 0
+    figure, p
+      &:last-child
+        margin-bottom 0
+        padding-bottom 0
+    summary
+      outline none
+      cursor pointer
+
+
+.custom-block p img
+  float: left
+  height: 70px
+  margin-right 1rem
+  border-radius: 50%;

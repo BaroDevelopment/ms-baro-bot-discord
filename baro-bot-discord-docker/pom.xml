@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ms-baro-bot-discord</artifactId>
+        <groupId>com.baro.bot.discord</groupId>
+        <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>baro-bot-discord-docker</artifactId>
+    <packaging>pom</packaging>
+
+    <properties>
+        <app.home>/opt/baro-bot-discord</app.home>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>build-docker-images</id>
+
+            <dependencies>
+                <dependency>
+                    <groupId>${project.groupId}</groupId>
+                    <artifactId>baro-bot-discord-service</artifactId>
+                    <version>${project.version}</version>
+                </dependency>
+            </dependencies>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <configuration>
+                            <images>
+                                <image>
+                                    <name>${docker.repo}/baro-bot-discord:${project.version}</name>
+                                    <build>
+                                        <optimise>true</optimise>
+                                        <from>${docker.container.parent}</from>
+                                        <maintainer>Baro Development</maintainer>
+                                        <workdir>${app.home}</workdir>
+
+                                        <env>
+                                            <APP_HOME>${app.home}</APP_HOME>
+                                        </env>
+
+                                        <assembly>
+                                            <mode>dir</mode>
+                                            <targetDir>${app.home}</targetDir>
+                                            <descriptor>assembly.xml</descriptor>
+                                        </assembly>
+
+                                        <runCmds>
+                                            <run>apk --update add tzdata openntpd</run>
+                                            <run>cp /usr/share/zoneinfo/Europe/Berlin /etc/localtime</run>
+                                            <run>echo "Europe/Berlin" > /etc/timezone</run>
+                                            <run>ntpd -s</run>
+                                        </runCmds>
+
+                                        <ports>
+                                            <port>5000</port>
+                                        </ports>
+
+                                        <cmd>
+                                            <exec>
+                                                <arg>java</arg>
+                                                <arg>-Xmx200m</arg>
+                                                <arg>-jar</arg>
+                                                <arg>-Dspring.config.location=${app.home}/config/</arg>
+                                                <arg>${app.home}/baro-bot-discord.jar</arg>
+                                            </exec>
+                                        </cmd>
+
+                                    </build>
+                                </image>
+                            </images>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+</project>
