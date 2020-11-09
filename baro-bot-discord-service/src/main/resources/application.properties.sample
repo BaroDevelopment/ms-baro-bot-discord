@@ -2,6 +2,7 @@
 production=false
 debug=false
 logging.level.org.springframework.web=INFO
+logging.level.com.baro.bot.discord=DEBUG
 logging.level.root=INFO
 server.port=5000
 

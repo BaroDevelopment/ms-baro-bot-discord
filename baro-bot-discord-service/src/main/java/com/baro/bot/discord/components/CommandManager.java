@@ -104,6 +104,7 @@ public class CommandManager extends ACommand {
         commands.put(SetnameCmd.COMMAND_NAME, new SetnameCmd());
         commands.put(SetgameCmd.COMMAND_NAME, new SetgameCmd());
         commands.put(SetavatarCmd.COMMAND_NAME, new SetavatarCmd());
+        commands.put(DownloadEmoteCmd.COMMAND_NAME, new DownloadEmoteCmd());
 
         // MISC
         commands.put(PollCmd.COMMAND_NAME, new PollCmd());

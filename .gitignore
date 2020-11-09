@@ -36,3 +36,6 @@ hs_err_pid*
 # Environment
 /.env
 baro-bot-discord-service/src/main/resources/application.properties
+
+# Emoji Folder
+Emojis
