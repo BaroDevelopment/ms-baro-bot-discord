@@ -7,6 +7,7 @@ import com.baro.bot.discord.commands.ICommand;
 import com.baro.bot.discord.commands.admin.*;
 import com.baro.bot.discord.commands.information.EmoteCmd;
 import com.baro.bot.discord.commands.information.HelpCmd;
+import com.baro.bot.discord.commands.information.InviteCmd;
 import com.baro.bot.discord.commands.misc.PollCmd;
 import com.baro.bot.discord.commands.moderation.BlacklistCmd;
 import com.baro.bot.discord.commands.moderation.LockCmd;
@@ -68,6 +69,7 @@ public class CommandManager extends ACommand {
         // INFORMATION
         commands.put(EmoteCmd.COMMAND_NAME, new EmoteCmd());
         commands.put(HelpCmd.COMMAND_NAME, new HelpCmd());
+        commands.put(InviteCmd.COMMAND_NAME, new InviteCmd());
 
         // MUSIC
         commands.put(PlayCmd.COMMAND_NAME, new PlayCmd());
@@ -105,6 +107,7 @@ public class CommandManager extends ACommand {
         commands.put(SetgameCmd.COMMAND_NAME, new SetgameCmd());
         commands.put(SetavatarCmd.COMMAND_NAME, new SetavatarCmd());
         commands.put(DownloadEmoteCmd.COMMAND_NAME, new DownloadEmoteCmd());
+        commands.put(LeaveServerCmd.COMMAND_NAME, new LeaveServerCmd());
 
         // MISC
         commands.put(PollCmd.COMMAND_NAME, new PollCmd());
