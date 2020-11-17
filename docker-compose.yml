@@ -9,6 +9,7 @@ services:
       - .env
     depends_on:
       - postgres
+      - redis
     networks:
       - local-network
   postgres:
@@ -23,7 +24,18 @@ services:
       - postgres-data-volume:/var/lib/postgresql/data
     networks:
       - local-network
+  redis:
+    image: "redis:alpine"
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redist-data-volume:/data
+    networks:
+      - local-network
 networks:
   local-network:
 volumes:
   postgres-data-volume:
+  redist-data-volume:
