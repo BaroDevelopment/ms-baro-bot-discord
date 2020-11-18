@@ -3,6 +3,7 @@ package com.baro.bot.discord.components;
 import com.baro.bot.discord.commands.admin.TicketCmd;
 import com.baro.bot.discord.components.redis.RedisDiscordMessageHandler;
 import com.baro.bot.discord.config.BotConfig;
+import com.baro.bot.discord.config.FlagsConfig;
 import com.baro.bot.discord.features.Logging;
 import com.baro.bot.discord.features.VoteSystem;
 import com.baro.bot.discord.service.BaroBot;
@@ -61,15 +62,18 @@ public class Listener extends ListenerAdapter {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Listener.class);
     private final BotConfig botConfig;
+    private final FlagsConfig flagsConfig;
     private final BaroBot bot;
     private final CommandManager manager;
     private final RedisDiscordMessageHandler redisDiscordMessageHandler;
 
-    public Listener(@Lazy BaroBot bot, BotConfig botConfig, @Lazy CommandManager manager, RedisDiscordMessageHandler redisDiscordMessageHandler) {
+    public Listener(@Lazy BaroBot bot, BotConfig botConfig, @Lazy CommandManager manager,
+                    RedisDiscordMessageHandler redisDiscordMessageHandler, FlagsConfig flagsConfig) {
         this.botConfig = botConfig;
         this.bot = bot;
         this.manager = manager;
         this.redisDiscordMessageHandler = redisDiscordMessageHandler;
+        this.flagsConfig = flagsConfig;
     }
 
     @Override
@@ -103,110 +107,110 @@ public class Listener extends ListenerAdapter {
     //User Events
     @Override
     public void onUserUpdateName(@Nonnull UserUpdateNameEvent event) {
-        new Logging().onUserUpdateName(event);
+        new Logging(flagsConfig).onUserUpdateName(event);
     }
 
     @Override
     public void onUserUpdateDiscriminator(@Nonnull UserUpdateDiscriminatorEvent event) {
-        new Logging().onUserUpdateDiscriminator(event);
+        new Logging(flagsConfig).onUserUpdateDiscriminator(event);
     }
 
     @Override
     public void onUserUpdateAvatar(@Nonnull UserUpdateAvatarEvent event) {
-        new Logging().onUserUpdateAvatar(event);
+        new Logging(flagsConfig).onUserUpdateAvatar(event);
     }
 
     @Override
     public void onUserUpdateOnlineStatus(@Nonnull UserUpdateOnlineStatusEvent event) {
-        new Logging().onUserUpdateOnlineStatus(event, bot);
+        new Logging(flagsConfig).onUserUpdateOnlineStatus(event, bot);
     }
 
     @Override
     public void onUserTyping(@Nonnull UserTypingEvent event) {
-        new Logging().onUserTyping(event, bot);
+        new Logging(flagsConfig).onUserTyping(event, bot);
     }
 
     @Override
     public void onUserActivityStart(@Nonnull UserActivityStartEvent event) {
-        new Logging().onUserActivityStart(event, bot);
+        new Logging(flagsConfig).onUserActivityStart(event, bot);
     }
 
     //Guild (TextChannel) Message Events
     @Override
     public void onGuildMessageDelete(GuildMessageDeleteEvent event) {
-            new Logging().onGuildMessageDelete(event, bot, redisDiscordMessageHandler);
+            new Logging(flagsConfig).onGuildMessageDelete(event, bot, redisDiscordMessageHandler);
     }
 
     @Override
     public void onGuildMessageUpdate(GuildMessageUpdateEvent event) {
-            new Logging().onGuildMessageUpdate(event, redisDiscordMessageHandler);
+            new Logging(flagsConfig).onGuildMessageUpdate(event, redisDiscordMessageHandler);
     }
 
     //TextChannel Events
     @Override
     public void onTextChannelDelete(@Nonnull TextChannelDeleteEvent event) {
-        new Logging().onTextChannelDelete(event);
+        new Logging(flagsConfig).onTextChannelDelete(event);
     }
 
     @Override
     public void onTextChannelUpdateName(@Nonnull TextChannelUpdateNameEvent event) {
-        new Logging().onTextChannelUpdateName(event);
+        new Logging(flagsConfig).onTextChannelUpdateName(event);
     }
 
     @Override
     public void onTextChannelUpdateTopic(@Nonnull TextChannelUpdateTopicEvent event) {
-        new Logging().onTextChannelUpdateTopic(event);
+        new Logging(flagsConfig).onTextChannelUpdateTopic(event);
     }
 
     @Override
     public void onTextChannelUpdatePosition(@Nonnull TextChannelUpdatePositionEvent event) {
-        new Logging().onTextChannelUpdatePosition(event);
+        new Logging(flagsConfig).onTextChannelUpdatePosition(event);
     }
 
     @Override
     public void onTextChannelUpdateNSFW(@Nonnull TextChannelUpdateNSFWEvent event) {
-        new Logging().onTextChannelUpdateNSFW(event, bot);
+        new Logging(flagsConfig).onTextChannelUpdateNSFW(event, bot);
     }
 
     @Override
     public void onTextChannelUpdateSlowmode(@Nonnull TextChannelUpdateSlowmodeEvent event) {
-        new Logging().onTextChannelUpdateSlowmode(event, bot);
+        new Logging(flagsConfig).onTextChannelUpdateSlowmode(event, bot);
     }
 
     @Override
     public void onTextChannelCreate(@Nonnull TextChannelCreateEvent event) {
-        new Logging().onTextChannelCreate(event);
+        new Logging(flagsConfig).onTextChannelCreate(event);
     }
 
     //VoiceChannel Events
     @Override
     public void onVoiceChannelDelete(@Nonnull VoiceChannelDeleteEvent event) {
-        new Logging().onVoiceChannelDelete(event);
+        new Logging(flagsConfig).onVoiceChannelDelete(event);
     }
 
     @Override
     public void onVoiceChannelUpdateName(@Nonnull VoiceChannelUpdateNameEvent event) {
-        new Logging().onVoiceChannelUpdateName(event);
+        new Logging(flagsConfig).onVoiceChannelUpdateName(event);
     }
 
     @Override
     public void onVoiceChannelUpdatePosition(@Nonnull VoiceChannelUpdatePositionEvent event) {
-        new Logging().onVoiceChannelUpdatePosition(event);
+        new Logging(flagsConfig).onVoiceChannelUpdatePosition(event);
     }
 
     @Override
     public void onVoiceChannelUpdateUserLimit(@Nonnull VoiceChannelUpdateUserLimitEvent event) {
-        new Logging().onVoiceChannelUpdateUserLimit(event);
+        new Logging(flagsConfig).onVoiceChannelUpdateUserLimit(event);
     }
 
     @Override
     public void onVoiceChannelUpdateBitrate(@Nonnull VoiceChannelUpdateBitrateEvent event) {
-        new Logging().onVoiceChannelUpdateBitrate(event);
+        new Logging(flagsConfig).onVoiceChannelUpdateBitrate(event);
     }
 
     @Override
     public void onVoiceChannelCreate(@Nonnull VoiceChannelCreateEvent event) {
-        new Logging().onVoiceChannelCreate(event);
+        new Logging(flagsConfig).onVoiceChannelCreate(event);
     }
 
     //Category Events
@@ -285,11 +289,11 @@ public class Listener extends ListenerAdapter {
 
     //Guild Member Events
     public void onGuildMemberJoin(@Nonnull GuildMemberJoinEvent event) {
-        new Logging().onGuildMemberJoin(event);
+        new Logging(flagsConfig).onGuildMemberJoin(event);
     }
 
     public void onGuildMemberRemove(@Nonnull GuildMemberRemoveEvent event) {
-        new Logging().onGuildMemberLeave(event);
+        new Logging(flagsConfig).onGuildMemberLeave(event);
     }
 
     public void onGuildMemberRoleAdd(@Nonnull GuildMemberRoleAddEvent event) {
@@ -310,14 +314,14 @@ public class Listener extends ListenerAdapter {
     }
 
     public void onGuildVoiceJoin(GuildVoiceJoinEvent event) {
-        new Logging().onGuildVoiceJoin(event);
+        new Logging(flagsConfig).onGuildVoiceJoin(event);
     }
 
     public void onGuildVoiceMove(@Nonnull GuildVoiceMoveEvent event) {
     }
 
     public void onGuildVoiceLeave(GuildVoiceLeaveEvent event) {
-        new Logging().onGuildVoiceLeave(event);
+        new Logging(flagsConfig).onGuildVoiceLeave(event);
     }
 
     public void onGuildVoiceMute(@Nonnull GuildVoiceMuteEvent event) {

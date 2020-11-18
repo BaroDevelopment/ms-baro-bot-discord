@@ -1,6 +1,7 @@
 package com.baro.bot.discord.features;
 
 import com.baro.bot.discord.components.redis.RedisDiscordMessageHandler;
+import com.baro.bot.discord.config.FlagsConfig;
 import com.baro.bot.discord.model.redis.MessageModel;
 import com.baro.bot.discord.service.BaroBot;
 import com.baro.bot.discord.util.ColorUtil;
@@ -35,26 +36,14 @@ import javax.annotation.Nonnull;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.HashMap;
 
 public class Logging {
 
-    // TODO: Add to channelflags.properties
+    private FlagsConfig flagsConfig;
 
-    private final String BAROBOT_NAME_LOG = "BAROBOT_NAME_LOG";
-    private final String BAROBOT_DISCRIMINATOR_LOG = "BAROBOT_DISCRIMINATOR_LOG";
-    private final String BAROBOT_AVATAR_LOG = "BAROBOT_AVATAR_LOG";
-    private final String BAROBOT_STATUS_LOG = "BAROBOT_STATUS_LOG";
-    private final String BAROBOT_TYPING_LOG = "BAROBOT_TYPING_LOG";
-    private final String BAROBOT_ACTIVITY_LOG = "BAROBOT_ACTIVITY_LOG";
-    private final String BAROBOT_MESSAGE_DELETE_LOG = "BAROBOT_MESSAGE_DELETE_LOG";
-    private final String BAROBOT_MESSAGE_EDIT_LOG = "BAROBOT_MESSAGE_EDIT_LOG";
-    private final String BAROBOT_TCHANNEL_LOG = "BAROBOT_TCHANNEL_LOG";
-    private final String BAROBOT_VCHANNEL_LOG = "BAROBOT_VCHANNEL_LOG";
-    private final String BAROBOT_CHANNEL_TOPIC_LOG = "BAROBOT_CHANNEL_TOPIC_LOG";
-    private final String BAROBOT_SERVER_JOIN = "BAROBOT_SERVER_JOIN";
-    private final String BAROBOT_VOICE_JOIN_LOG = "BAROBOT_VOICE_JOIN_LOG";
-    private final String BAROBOT_VOICE_LEAVE_LOG = "BAROBOT_VOICE_LEAVE_LOG";
+    public Logging(FlagsConfig flagsConfig) {
+        this.flagsConfig = flagsConfig;
+    }
 
     private void postLog(EmbedBuilder eb, Guild guild, String flag, Message msg) {
         for (TextChannel tc : guild.getTextChannels()) {
@@ -77,7 +66,7 @@ public class Logging {
         eb.setTimestamp(OffsetDateTime.now());
         for (Guild guild : event.getJDA().getGuilds()) {
             if (guild.getMemberById(user.getIdLong()) != null) {
-                postLog(eb, guild, BAROBOT_NAME_LOG, null);
+                postLog(eb, guild, flagsConfig.getNameLog(), null);
             }
         }
     }
@@ -93,7 +82,7 @@ public class Logging {
         eb.setTimestamp(OffsetDateTime.now());
         for (Guild guild : event.getJDA().getGuilds()) {
             if (guild.getMemberById(user.getIdLong()) != null) {
-                postLog(eb, guild, BAROBOT_DISCRIMINATOR_LOG, null);
+                postLog(eb, guild, flagsConfig.getDiscriminatorLog(), null);
             }
         }
     }
@@ -111,7 +100,7 @@ public class Logging {
         eb.setTimestamp(OffsetDateTime.now());
         for (Guild guild : event.getJDA().getGuilds()) {
             if (guild.getMemberById(user.getIdLong()) != null) {
-                postLog(eb, guild, BAROBOT_AVATAR_LOG, null);
+                postLog(eb, guild, flagsConfig.getAvatarLog(), null);
             }
         }
     }
@@ -127,7 +116,7 @@ public class Logging {
         eb.addField("User ID", user.getId(), true);
         eb.setTimestamp(OffsetDateTime.now());
         if (event.getGuild().getMemberById(user.getIdLong()) != null)
-            postLog(eb, event.getGuild(), BAROBOT_STATUS_LOG, null);
+            postLog(eb, event.getGuild(), flagsConfig.getStatusLog(), null);
     }
 
     public void onUserTyping(@Nonnull UserTypingEvent event, BaroBot bot) {
@@ -147,7 +136,7 @@ public class Logging {
         eb.addField("User ID", user.getId(), true);
         eb.setTimestamp(OffsetDateTime.now());
         if (event.getGuild().getMemberById(user.getIdLong()) != null)
-            postLog(eb, event.getGuild(), BAROBOT_TYPING_LOG, null);
+            postLog(eb, event.getGuild(), flagsConfig.getTypingLog(), null);
     }
 
     public void onUserActivityStart(@Nonnull UserActivityStartEvent event, BaroBot bot) {
@@ -185,9 +174,8 @@ public class Logging {
             eb.addField("RichPresence", richUrl + "```http\n" + richTitle + "\n" + richState + "\n" + richDetails + "\n```", false);
         }
         if (event.getGuild().getMemberById(user.getIdLong()) != null)
-            postLog(eb, event.getGuild(), BAROBOT_ACTIVITY_LOG, null);
+            postLog(eb, event.getGuild(), flagsConfig.getActivityLog(), null);
     }
-
 
     // Embed deleted are not logged
     public void onGuildMessageDelete(GuildMessageDeleteEvent event, BaroBot bot, RedisDiscordMessageHandler redis) {
@@ -219,7 +207,7 @@ public class Logging {
         if (!msg.getContent().isEmpty())
             eb.addField("Content", "```css\n" + msg.getContent() + "\n```", false);
 
-        postLog(eb, event.getGuild(), BAROBOT_MESSAGE_DELETE_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getMessageDeleteLog(), null);
     }
 
     public void onGuildMessageUpdate(GuildMessageUpdateEvent event, RedisDiscordMessageHandler redis) {
@@ -248,7 +236,7 @@ public class Logging {
         eb.setDescription("MESSAGE EDIT");
         eb.setTimestamp(OffsetDateTime.parse(msg.getCreationTime()));
         eb.setFooter("Creation time: ");
-        postLog(eb, event.getGuild(), BAROBOT_MESSAGE_EDIT_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getMessageEditLog(), null);
     }
 
     public void onTextChannelDelete(@Nonnull TextChannelDeleteEvent event) {
@@ -257,7 +245,7 @@ public class Logging {
         eb.addField("Channel Name", event.getChannel().getName(), true);
         eb.addField("Channel ID", event.getChannel().getId(), true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_TCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getTextChannelUpdateLog(), null);
     }
 
     public void onTextChannelUpdateName(@Nonnull TextChannelUpdateNameEvent event) {
@@ -268,7 +256,7 @@ public class Logging {
         eb.addField("Old name", event.getOldName(), true);
         eb.addField("New name", event.getNewName(), true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_TCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getTextChannelUpdateLog(), null);
     }
 
     public void onTextChannelUpdateTopic(@Nonnull TextChannelUpdateTopicEvent event) {
@@ -279,7 +267,7 @@ public class Logging {
         eb.addField("Old topic", event.getOldTopic() == null ? "`none`" : event.getOldTopic(), true);
         eb.addField("New topic", event.getNewTopic() != null ? event.getNewTopic() : "`none`", true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_CHANNEL_TOPIC_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getTextChannelTopicUpdateLog(), null);
     }
 
     public void onTextChannelUpdatePosition(@Nonnull TextChannelUpdatePositionEvent event) {
@@ -290,7 +278,7 @@ public class Logging {
         eb.addField("Old position", event.getOldPosition() + "", true);
         eb.addField("New position", event.getNewPosition() + "", true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_TCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getTextChannelUpdateLog(), null);
     }
 
     public void onTextChannelUpdateNSFW(@Nonnull TextChannelUpdateNSFWEvent event, BaroBot bot) {
@@ -303,7 +291,7 @@ public class Logging {
         eb.addField("Before", eu.getBooleanEmote(event.getOldNSFW()).getAsMention(), true);
         eb.addField("Now", eu.getBooleanEmote(event.getNewValue()).getAsMention(), true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_TCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getTextChannelUpdateLog(), null);
     }
 
     public void onTextChannelUpdateSlowmode(@Nonnull TextChannelUpdateSlowmodeEvent event, BaroBot bot) {
@@ -316,7 +304,7 @@ public class Logging {
         eb.addField("Before", event.getOldSlowmode() + " seconds", true);
         eb.addField("Now", event.getNewSlowmode() + " seconds", true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_TCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getTextChannelUpdateLog(), null);
     }
 
     public void onTextChannelCreate(@Nonnull TextChannelCreateEvent event) {
@@ -325,7 +313,7 @@ public class Logging {
         eb.addField("Channel", event.getChannel().getAsMention(), true);
         eb.addField("Channel ID", event.getChannel().getId(), true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_TCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getTextChannelUpdateLog(), null);
     }
 
     public void onVoiceChannelDelete(@Nonnull VoiceChannelDeleteEvent event) {
@@ -334,7 +322,7 @@ public class Logging {
         eb.addField("Channel Name", event.getChannel().getName(), true);
         eb.addField("Channel ID", event.getChannel().getId(), true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_VCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getVoiceChannelUpdateLog(), null);
     }
 
     public void onVoiceChannelUpdateName(@Nonnull VoiceChannelUpdateNameEvent event) {
@@ -345,7 +333,7 @@ public class Logging {
         eb.addField("Old name", event.getOldName(), true);
         eb.addField("New name", event.getNewName(), true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_VCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getVoiceChannelUpdateLog(), null);
     }
 
     public void onVoiceChannelUpdatePosition(@Nonnull VoiceChannelUpdatePositionEvent event) {
@@ -356,7 +344,7 @@ public class Logging {
         eb.addField("Old position", event.getOldPosition() + "", true);
         eb.addField("New position", event.getNewPosition() + "", true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_VCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getVoiceChannelUpdateLog(), null);
     }
 
     public void onVoiceChannelUpdateUserLimit(@Nonnull VoiceChannelUpdateUserLimitEvent event) {
@@ -367,7 +355,7 @@ public class Logging {
         eb.addField("Old position", event.getOldUserLimit() + "", true);
         eb.addField("New position", event.getNewUserLimit() + "", true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_VCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getVoiceChannelUpdateLog(), null);
     }
 
     public void onVoiceChannelUpdateBitrate(@Nonnull VoiceChannelUpdateBitrateEvent event) {
@@ -378,7 +366,7 @@ public class Logging {
         eb.addField("Old position", event.getOldBitrate() + "", true);
         eb.addField("New position", event.getNewBitrate() + "", true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_VCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getVoiceChannelUpdateLog(), null);
     }
 
     public void onVoiceChannelCreate(@Nonnull VoiceChannelCreateEvent event) {
@@ -387,7 +375,7 @@ public class Logging {
         eb.addField("Channel Name", event.getChannel().getName(), true);
         eb.addField("Channel ID", event.getChannel().getId(), true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_VCHANNEL_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getVoiceChannelUpdateLog(), null);
     }
 
     public void onGuildMemberJoin(@Nonnull GuildMemberJoinEvent event) {
@@ -400,7 +388,7 @@ public class Logging {
         eb.addField("Account creation", FormatUtil.formatTime(event.getMember().getTimeCreated()), false);
         eb.addField("Join Date", FormatUtil.formatTime(event.getMember().getTimeJoined()), true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_SERVER_JOIN, null);
+        postLog(eb, event.getGuild(), flagsConfig.getWelcomeLog(), null);
     }
 
     public void onGuildMemberLeave(@Nonnull GuildMemberRemoveEvent event) {
@@ -427,7 +415,7 @@ public class Logging {
         eb.addField("Voice Channel", event.getChannelJoined().getName(), true);
         eb.addField("Author ID", user.getId(), true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_VOICE_JOIN_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getVoiceChannelJoinLog(), null);
     }
 
     public void onGuildVoiceLeave(GuildVoiceLeaveEvent event) {
@@ -438,6 +426,6 @@ public class Logging {
         eb.addField("Voice Channel", event.getChannelLeft().getName(), true);
         eb.addField("Author ID", user.getId(), true);
         eb.setTimestamp(OffsetDateTime.now());
-        postLog(eb, event.getGuild(), BAROBOT_VOICE_LEAVE_LOG, null);
+        postLog(eb, event.getGuild(), flagsConfig.getVoiceChannelLeaveLog(), null);
     }
 }
