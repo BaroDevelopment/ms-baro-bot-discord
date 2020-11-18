@@ -191,6 +191,7 @@ public class Logging {
 
     // Embed deleted are not logged
     public void onGuildMessageDelete(GuildMessageDeleteEvent event, BaroBot bot, RedisDiscordMessageHandler redis) {
+
         bot.getNowplayingHandler().onMessageDelete(event.getGuild(), event.getMessageIdLong());
         MessageModel msg = redis.findOne(event.getMessageId());
 
@@ -199,13 +200,12 @@ public class Logging {
         TextChannel channel = event.getGuild().getTextChannelById(msg.getChannelId());
         Member member = event.getGuild().getMemberById(msg.getUserId());
 
-        if (member == null) return;
+        if (member == null || channel == null) return;
 
         EmbedBuilder eb = new EmbedBuilder().setColor(new ColorUtil().getRandomColor());
         eb.setAuthor(member.getUser().getName() + "#" + member.getUser().getDiscriminator(),
                 member.getUser().getEffectiveAvatarUrl(), member.getUser().getEffectiveAvatarUrl());
-        if (channel != null)
-            eb.addField("Channel", channel.getAsMention(), true);
+        eb.addField("Channel", channel.getAsMention(), true);
         eb.addField("MessageID", msg.getMessageId(), true);
         eb.addField("Author ID", msg.getUserId(), true);
         eb.setDescription("MESSAGE DELETE");
@@ -222,30 +222,33 @@ public class Logging {
         postLog(eb, event.getGuild(), BAROBOT_MESSAGE_DELETE_LOG, null);
     }
 
-    public void onGuildMessageUpdate(GuildMessageUpdateEvent event, HashMap<Long, Message> messages) {
+    public void onGuildMessageUpdate(GuildMessageUpdateEvent event, RedisDiscordMessageHandler redis) {
 
-        // Log message updates
-        try {
-            Message msg = messages.get(event.getMessageIdLong());
-            if (msg == null) return;
-            EmbedBuilder eb = new EmbedBuilder().setColor(new ColorUtil().getRandomColor());
-            eb.setAuthor(msg.getAuthor().getName() + "#" + msg.getAuthor().getDiscriminator(), msg.getAuthor().getEffectiveAvatarUrl(), msg.getAuthor().getEffectiveAvatarUrl());
-            eb.addField("Channel", msg.getTextChannel().getAsMention(), true);
-            eb.addField("MessageID", msg.getId(), true);
-            eb.addField("Author ID", msg.getAuthor().getId(), true);
-            if (msg.getEmbeds().size() == 0) {
-                eb.addField("Before", "```css\n" + msg.getContentDisplay() + "\n```", false);
-                eb.addField("After", "```css\n" + event.getMessage().getContentDisplay() + "\n```", false);
-            } else
-                eb.addField("", "```css\nEmbed edited\n```", false);
-            eb.setDescription("MESSAGE EDIT");
-            eb.setTimestamp(msg.getTimeCreated());
-            eb.setFooter("Creation time: ");
-            postLog(eb, event.getGuild(), BAROBOT_MESSAGE_EDIT_LOG, msg);
+        if (!event.getMessage().getEmbeds().isEmpty()) return;
 
-        } catch (Exception ex) {
-            //ignore
-        }
+        MessageModel msg = redis.findOne(event.getMessageId());
+
+        if (msg == null) return;
+
+        TextChannel channel = event.getGuild().getTextChannelById(msg.getChannelId());
+        Member member = event.getGuild().getMemberById(msg.getUserId());
+
+        if (member == null || channel == null) return;
+
+        EmbedBuilder eb = new EmbedBuilder().setColor(new ColorUtil().getRandomColor());
+        eb.setAuthor(member.getUser().getName() + "#" + member.getUser().getDiscriminator(),
+                member.getUser().getEffectiveAvatarUrl(), member.getUser().getEffectiveAvatarUrl());
+        eb.addField("Channel", channel.getAsMention(), true);
+        eb.addField("MessageID", msg.getMessageId(), true);
+        eb.addField("Author ID", msg.getUserId(), true);
+
+        eb.addField("Before", "```css\n" + msg.getContent() + "\n```", false);
+        eb.addField("After", "```css\n" + event.getMessage().getContentDisplay() + "\n```", false);
+
+        eb.setDescription("MESSAGE EDIT");
+        eb.setTimestamp(OffsetDateTime.parse(msg.getCreationTime()));
+        eb.setFooter("Creation time: ");
+        postLog(eb, event.getGuild(), BAROBOT_MESSAGE_EDIT_LOG, null);
     }
 
     public void onTextChannelDelete(@Nonnull TextChannelDeleteEvent event) {

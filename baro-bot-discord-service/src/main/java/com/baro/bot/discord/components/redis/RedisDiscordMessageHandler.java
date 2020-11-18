@@ -23,6 +23,9 @@ public class RedisDiscordMessageHandler {
     }
 
     public void save(Message message) {
+        // we don't store embed messages
+        if (!message.getEmbeds().isEmpty()) return;
+
         String imageUrl = message.getAttachments().isEmpty() ? "" : message.getAttachments().get(0).getUrl();
         MessageModel messageModel = new MessageModel(message.getId(), message.getAuthor().getId(),
                 message.getGuild().getId(), message.getChannel().getId(), message.getContentDisplay(), imageUrl,

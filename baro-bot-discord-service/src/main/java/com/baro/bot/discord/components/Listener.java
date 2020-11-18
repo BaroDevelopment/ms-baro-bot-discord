@@ -139,7 +139,7 @@ public class Listener extends ListenerAdapter {
 
     @Override
     public void onGuildMessageUpdate(GuildMessageUpdateEvent event) {
-//            new Logging().onGuildMessageUpdate(event, messages);       // TODO: use redis for messages
+            new Logging().onGuildMessageUpdate(event, redisDiscordMessageHandler);
     }
 
     //TextChannel Events
