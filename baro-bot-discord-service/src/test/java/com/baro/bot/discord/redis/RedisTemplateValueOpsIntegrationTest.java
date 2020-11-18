@@ -22,19 +22,14 @@ class RedisTemplateValueOpsIntegrationTest {
     private ReactiveRedisTemplate<String, MessageModel> redisTemplate;
     private ReactiveValueOperations<String, MessageModel> reactiveValueOps;
 
-    private static final MessageModel MESSAGE_MODEL_VALUE_1 = new MessageModel("555", "555");
+    private static final MessageModel MESSAGE_MODEL_VALUE_1 = new MessageModel("555", "555", "555", "555", "555", "555", null);
     private static final String MESSAGE_MODEL_KEY_1 = "555";
 
-    private static final MessageModel MESSAGE_MODEL_VALUE_2 = new MessageModel("111", "111");
+    private static final MessageModel MESSAGE_MODEL_VALUE_2 = new MessageModel("111", "111", "111", "111", "111", "111", null);
     private static final String MESSAGE_MODEL_KEY_2 = "111";
 
     @Autowired
     private RedisConnectionFactory factory;
-
-    @BeforeEach
-    public void flush(){
-        factory.getConnection().flushDb();
-    }
 
     @BeforeAll
     public void setup() {
@@ -56,8 +51,12 @@ class RedisTemplateValueOpsIntegrationTest {
 
         Mono<MessageModel> fetchedMessages = reactiveValueOps.get(MESSAGE_MODEL_KEY_1);
 
+        MessageModel message = new MessageModel(MESSAGE_MODEL_VALUE_1.getMessageId(), MESSAGE_MODEL_VALUE_1.getUserId(),
+                MESSAGE_MODEL_VALUE_1.getGuildId(), MESSAGE_MODEL_VALUE_1.getChannelId(),
+                MESSAGE_MODEL_VALUE_1.getContent(), MESSAGE_MODEL_VALUE_1.getAttachment() , null);
+
         StepVerifier.create(fetchedMessages)
-                .expectNext(new MessageModel(MESSAGE_MODEL_VALUE_1.getMessageId(), MESSAGE_MODEL_VALUE_1.getContent()))
+                .expectNext(message)
                 .verifyComplete();
     }
 

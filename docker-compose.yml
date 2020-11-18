@@ -25,7 +25,7 @@ services:
     networks:
       - local-network
   redis:
-    image: "redis:alpine"
+    image: redis:alpine3.12
     container_name: redis
     restart: always
     ports:
