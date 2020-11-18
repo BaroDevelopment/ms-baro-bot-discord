@@ -1,6 +1,7 @@
 package com.baro.bot.discord.components;
 
 import com.baro.bot.discord.commands.admin.TicketCmd;
+import com.baro.bot.discord.components.redis.RedisDiscordMessageHandler;
 import com.baro.bot.discord.config.BotConfig;
 import com.baro.bot.discord.features.Logging;
 import com.baro.bot.discord.features.VoteSystem;
@@ -62,11 +63,13 @@ public class Listener extends ListenerAdapter {
     private final BotConfig botConfig;
     private final BaroBot bot;
     private final CommandManager manager;
+    private final RedisDiscordMessageHandler redisDiscordMessageHandler;
 
-    public Listener(@Lazy BaroBot bot, BotConfig botConfig, @Lazy CommandManager manager) {
+    public Listener(@Lazy BaroBot bot, BotConfig botConfig, @Lazy CommandManager manager, RedisDiscordMessageHandler redisDiscordMessageHandler) {
         this.botConfig = botConfig;
         this.bot = bot;
         this.manager = manager;
+        this.redisDiscordMessageHandler = redisDiscordMessageHandler;
     }
 
     @Override
@@ -83,7 +86,7 @@ public class Listener extends ListenerAdapter {
         if (event.isWebhookMessage() || event.getAuthor().isBot()) return;
 
         manager.handle(event);
-
+        redisDiscordMessageHandler.save(event.getMessage());
         new VoteSystem().handleVotes(bot, event);
     }
 
@@ -131,7 +134,7 @@ public class Listener extends ListenerAdapter {
     //Guild (TextChannel) Message Events
     @Override
     public void onGuildMessageDelete(GuildMessageDeleteEvent event) {
-//            new Logging().onGuildMessageDelete(event, bot, messages); // TODO: use redis for messages
+            new Logging().onGuildMessageDelete(event, bot, redisDiscordMessageHandler);
     }
 
     @Override

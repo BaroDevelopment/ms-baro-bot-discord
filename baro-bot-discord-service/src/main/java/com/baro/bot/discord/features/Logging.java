@@ -1,5 +1,7 @@
 package com.baro.bot.discord.features;
 
+import com.baro.bot.discord.components.redis.RedisDiscordMessageHandler;
+import com.baro.bot.discord.model.redis.MessageModel;
 import com.baro.bot.discord.service.BaroBot;
 import com.baro.bot.discord.util.ColorUtil;
 import com.baro.bot.discord.util.EmoteUtil;
@@ -186,34 +188,38 @@ public class Logging {
             postLog(eb, event.getGuild(), BAROBOT_ACTIVITY_LOG, null);
     }
 
-    public void onGuildMessageDelete(GuildMessageDeleteEvent event, BaroBot bot, HashMap<Long, Message> messages) {
+
+    // Embed deleted are not logged
+    public void onGuildMessageDelete(GuildMessageDeleteEvent event, BaroBot bot, RedisDiscordMessageHandler redis) {
         bot.getNowplayingHandler().onMessageDelete(event.getGuild(), event.getMessageIdLong());
+        MessageModel msg = redis.findOne(event.getMessageId());
 
-        try {
-            Message msg = messages.get(event.getMessageIdLong());
-            if (msg == null) return;
-            EmbedBuilder eb = new EmbedBuilder().setColor(new ColorUtil().getRandomColor());
-            eb.setAuthor(msg.getAuthor().getName() + "#" + msg.getAuthor().getDiscriminator(), msg.getAuthor().getEffectiveAvatarUrl(), msg.getAuthor().getEffectiveAvatarUrl());
-            eb.addField("Channel", msg.getTextChannel().getAsMention(), true);
-            eb.addField("MessageID", msg.getId(), true);
-            eb.addField("Author ID", msg.getAuthor().getId(), true);
-            eb.setDescription("MESSAGE DELETE");
-            eb.setTimestamp(msg.getTimeCreated());
-            eb.setFooter("Creation time: ");
+        if (msg == null) return;
 
-            if (msg.getAttachments().size() > 0 && msg.getAttachments().get(0).isImage()) {
-                eb.setImage(msg.getAttachments().get(0).getUrl());
-            }
+        TextChannel channel = event.getGuild().getTextChannelById(msg.getChannelId());
+        Member member = event.getGuild().getMemberById(msg.getUserId());
 
-            if (msg.getEmbeds().size() == 0 && !msg.getContentDisplay().isEmpty())
-                eb.addField("Content", "```css\n" + msg.getContentDisplay() + "\n```", false);
-            if (msg.getAttachments().size() > 0 && msg.getAttachments().get(0).isImage())
-                eb.setImage(msg.getAttachments().get(0).getProxyUrl());
-            postLog(eb, event.getGuild(), BAROBOT_MESSAGE_DELETE_LOG, msg);
+        if (member == null) return;
 
-        } catch (NullPointerException ex) {
-            ex.printStackTrace();
+        EmbedBuilder eb = new EmbedBuilder().setColor(new ColorUtil().getRandomColor());
+        eb.setAuthor(member.getUser().getName() + "#" + member.getUser().getDiscriminator(),
+                member.getUser().getEffectiveAvatarUrl(), member.getUser().getEffectiveAvatarUrl());
+        if (channel != null)
+            eb.addField("Channel", channel.getAsMention(), true);
+        eb.addField("MessageID", msg.getMessageId(), true);
+        eb.addField("Author ID", msg.getUserId(), true);
+        eb.setDescription("MESSAGE DELETE");
+        eb.setTimestamp(OffsetDateTime.parse(msg.getCreationTime()));
+        eb.setFooter("Creation time: ");
+
+        if (!msg.getAttachment().isEmpty()) {
+            eb.setImage(msg.getAttachment());
         }
+
+        if (!msg.getContent().isEmpty())
+            eb.addField("Content", "```css\n" + msg.getContent() + "\n```", false);
+
+        postLog(eb, event.getGuild(), BAROBOT_MESSAGE_DELETE_LOG, null);
     }
 
     public void onGuildMessageUpdate(GuildMessageUpdateEvent event, HashMap<Long, Message> messages) {

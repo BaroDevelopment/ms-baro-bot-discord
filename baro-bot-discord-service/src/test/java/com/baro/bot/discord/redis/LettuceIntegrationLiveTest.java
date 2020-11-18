@@ -34,7 +34,7 @@ class LettuceIntegrationLiveTest {
     private static RedisClient redisClient;
 
     @BeforeEach
-    public void flush(){
+    public void flush() {
         redisConnection.sync().flushdb();
     }
 
@@ -270,9 +270,13 @@ class LettuceIntegrationLiveTest {
         RedisPubSubAsyncCommands<String, String> pubasync = pubconnection.async();
         RedisFuture<Long> result = pubasync.publish("channel", "hithere");
 
+        for (int i = 0; i < 12; i++) {
+            if (!result.isDone())
+                Thread.sleep(10000);
+        }
+
         // Need a long wait for publish to complete, depending on system.
-        result.get(5, TimeUnit.SECONDS);
-        Thread.sleep(30000);
+        result.get(30, TimeUnit.SECONDS);
         assertTrue(listener.getMessage().equals("hithere"));
     }
 
