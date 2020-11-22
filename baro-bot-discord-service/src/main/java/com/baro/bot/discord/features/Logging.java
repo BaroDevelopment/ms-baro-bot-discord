@@ -49,7 +49,7 @@ public class Logging {
         for (TextChannel tc : guild.getTextChannels()) {
             if (tc.getTopic() != null && tc.getTopic().toUpperCase().contains(flag)) {
                 tc.sendMessage(eb.build()).queue();
-                if (msg != null && msg.getEmbeds().size() > 0)
+                if (msg != null && msg.getEmbeds().isEmpty())
                     tc.sendMessage(msg.getEmbeds().get(0)).queue();
             }
         }

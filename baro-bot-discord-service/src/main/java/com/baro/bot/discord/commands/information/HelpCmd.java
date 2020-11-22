@@ -98,11 +98,16 @@ public class HelpCmd extends ACommand implements ICommand {
                 .filter(cmd -> cmd.getCategory().equals(CommandCategory.ADMIN))
                 .collect(Collectors.toList());
 
+        List<ICommand> searchCmds = commands.values().stream()
+                .filter(cmd -> cmd.getCategory().equals(CommandCategory.SEARCH))
+                .collect(Collectors.toList());
+
         String ownerValue = "```css\n";
         String musicValue = "Everyone can use those\n```css\n";
         String djValue = "Admin or DJ role needed\n```css\n";
         String infoValue = "```css\n";
         String adminValue = "```css\n";
+        String searchValue = "```css\n";
 
         for (int i = 0; i < ownerCmds.size(); i++) {
             if (i % 3 == 2) {
@@ -139,16 +144,25 @@ public class HelpCmd extends ACommand implements ICommand {
                 adminValue += make25Chars(ctx.getPrefix() + adminCmds.get(i).getName()).toLowerCase();
             }
         }
+        for (int i = 0; i < searchCmds.size(); i++) {
+            if (i % 3 == 2) {
+                searchValue += make25Chars(ctx.getPrefix() + searchCmds.get(i).getName()).toLowerCase() + "\n";
+            } else {
+                searchValue += make25Chars(ctx.getPrefix() + searchCmds.get(i).getName()).toLowerCase();
+            }
+        }
         ownerValue += "\n```";
         musicValue += "\n```";
         djValue += "\n```";
         infoValue += "\n```";
         adminValue += "\n```";
+        searchValue += "\n```";
 
         eb.addField("BOT OWNER COMMANDS", ownerValue, false)
                 .addField("ADMIN COMMANDS", adminValue, false)
                 .addField("MUSIC COMMANDS", musicValue + djValue, false)
                 .addField("INFO COMMANDS", infoValue, false)
+                .addField("SEARCH COMMANDS", searchValue, false)
                 .addBlankField(false)
                 .addField("How to get the description of all those commands ?", ctx.getPrefix() + "help <command>", false)
                 .addField("EXAMPLE", ctx.getPrefix() + "help play", false)
