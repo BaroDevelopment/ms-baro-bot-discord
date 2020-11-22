@@ -4,6 +4,7 @@ public enum CommandCategory {
     ADMIN,
     MUSIC,
     DJ,
+    SEARCH,
     INFORMATION,
     OWNER,
     MODERATION

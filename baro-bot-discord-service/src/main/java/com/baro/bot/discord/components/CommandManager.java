@@ -14,6 +14,9 @@ import com.baro.bot.discord.commands.moderation.LockCmd;
 import com.baro.bot.discord.commands.music.*;
 import com.baro.bot.discord.commands.music.dj.*;
 import com.baro.bot.discord.commands.owner.*;
+import com.baro.bot.discord.commands.search.DictionaryCmd;
+import com.baro.bot.discord.commands.search.GoogleCmd;
+import com.baro.bot.discord.commands.search.UrbanCmd;
 import com.baro.bot.discord.config.BotConfig;
 import com.baro.bot.discord.config.FlagsConfig;
 import com.baro.bot.discord.model.entities.CommandDisabledEntity;
@@ -115,6 +118,11 @@ public class CommandManager extends ACommand {
         // MODERATION
         commands.put(LockCmd.COMMAND_NAME, new LockCmd());
         commands.put(BlacklistCmd.COMMAND_NAME, new BlacklistCmd(bot.getEventWaiter(), commandDisabledRepository));
+
+        // search
+        commands.put(GoogleCmd.COMMAND_NAME, new GoogleCmd(botConfig));
+        commands.put(UrbanCmd.COMMAND_NAME, new UrbanCmd(bot));
+        commands.put(DictionaryCmd.COMMAND_NAME, new DictionaryCmd(botConfig, bot));
     }
 
     public void handle(MessageReceivedEvent event) {
