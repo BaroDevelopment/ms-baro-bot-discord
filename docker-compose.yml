@@ -3,6 +3,7 @@ services:
   discord-bot:
     image: barodev/baro-bot-discord:0.0.1-SNAPSHOT
     container_name: discord-bot
+    hostname: discord-bot
     ports:
       - "5000:5000"
     env_file:
@@ -14,6 +15,7 @@ services:
       - local-network
   postgres:
     image: postgres
+    hostname: postgres
     container_name: postgres
     restart: always
     ports:
@@ -27,6 +29,7 @@ services:
   redis:
     image: redis:alpine3.12
     container_name: redis
+    hostname: redis
     restart: always
     ports:
       - "6379:6379"
