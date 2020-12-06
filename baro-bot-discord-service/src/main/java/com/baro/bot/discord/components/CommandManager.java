@@ -9,10 +9,7 @@ import com.baro.bot.discord.commands.information.CharCmd;
 import com.baro.bot.discord.commands.information.HelpCmd;
 import com.baro.bot.discord.commands.information.InviteCmd;
 import com.baro.bot.discord.commands.misc.PollCmd;
-import com.baro.bot.discord.commands.moderation.BanCmd;
-import com.baro.bot.discord.commands.moderation.BlacklistCmd;
-import com.baro.bot.discord.commands.moderation.KickCmd;
-import com.baro.bot.discord.commands.moderation.LockCmd;
+import com.baro.bot.discord.commands.moderation.*;
 import com.baro.bot.discord.commands.music.*;
 import com.baro.bot.discord.commands.music.dj.*;
 import com.baro.bot.discord.commands.owner.*;
@@ -124,6 +121,7 @@ public class CommandManager extends ACommand {
         commands.put(LockCmd.COMMAND_NAME, new LockCmd());
         commands.put(BanCmd.COMMAND_NAME, new BanCmd(imageConfig));
         commands.put(KickCmd.COMMAND_NAME, new KickCmd(imageConfig));
+        commands.put(ChanneltopicCmd.COMMAND_NAME, new ChanneltopicCmd());
         commands.put(BlacklistCmd.COMMAND_NAME, new BlacklistCmd(bot.getEventWaiter(), commandDisabledRepository));
 
         // search
