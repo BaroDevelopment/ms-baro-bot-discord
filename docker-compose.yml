@@ -18,6 +18,9 @@ services:
     hostname: postgres
     container_name: postgres
     restart: always
+    environment:
+      - POSTGRES_USER=${SPRING_DATASOURCE_USERNAME}
+      - POSTGRES_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
     ports:
       - "5432:5432"
     env_file:
@@ -31,10 +34,14 @@ services:
     container_name: redis
     hostname: redis
     restart: always
+    env_file:
+      - .env
+    command: redis-server --requirepass ${SPRING_REDIS_PASSWORD}
     ports:
       - "6379:6379"
     volumes:
       - redist-data-volume:/data
+    #      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - local-network
 networks:
