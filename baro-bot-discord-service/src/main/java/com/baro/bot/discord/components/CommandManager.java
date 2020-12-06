@@ -5,11 +5,13 @@ import com.baro.bot.discord.commands.CommandCategory;
 import com.baro.bot.discord.commands.CommandContext;
 import com.baro.bot.discord.commands.ICommand;
 import com.baro.bot.discord.commands.admin.*;
-import com.baro.bot.discord.commands.information.EmoteCmd;
+import com.baro.bot.discord.commands.information.CharCmd;
 import com.baro.bot.discord.commands.information.HelpCmd;
 import com.baro.bot.discord.commands.information.InviteCmd;
 import com.baro.bot.discord.commands.misc.PollCmd;
+import com.baro.bot.discord.commands.moderation.BanCmd;
 import com.baro.bot.discord.commands.moderation.BlacklistCmd;
+import com.baro.bot.discord.commands.moderation.KickCmd;
 import com.baro.bot.discord.commands.moderation.LockCmd;
 import com.baro.bot.discord.commands.music.*;
 import com.baro.bot.discord.commands.music.dj.*;
@@ -19,6 +21,7 @@ import com.baro.bot.discord.commands.search.GoogleCmd;
 import com.baro.bot.discord.commands.search.UrbanCmd;
 import com.baro.bot.discord.config.BotConfig;
 import com.baro.bot.discord.config.FlagsConfig;
+import com.baro.bot.discord.config.ImageConfig;
 import com.baro.bot.discord.model.entities.CommandDisabledEntity;
 import com.baro.bot.discord.model.entities.CommandDisabledEntityId;
 import com.baro.bot.discord.model.entities.GuildEntity;
@@ -47,16 +50,18 @@ public class CommandManager extends ACommand {
     private final Map<String, ICommand> commands;
     private final BaroBot bot;
     private final BotConfig botConfig;
+    private final ImageConfig imageConfig;
     private final FlagsConfig flagsConfig;
     private final GuildRepository guildRepository;
     private final MusicRepository musicRepository;
     private final CommandDisabledRepository commandDisabledRepository;
 
-    public CommandManager(BaroBot bot, BotConfig botConfig, FlagsConfig flagsConfig, GuildRepository guildRepository,
+    public CommandManager(BaroBot bot, BotConfig botConfig, FlagsConfig flagsConfig, ImageConfig imageConfig, GuildRepository guildRepository,
                           MusicRepository musicRepository, CommandDisabledRepository commandDisabledRepository) {
         this.bot = bot;
         this.botConfig = botConfig;
         this.flagsConfig = flagsConfig;
+        this.imageConfig = imageConfig;
         this.guildRepository = guildRepository;
         this.musicRepository = musicRepository;
         this.commandDisabledRepository = commandDisabledRepository;
@@ -70,7 +75,7 @@ public class CommandManager extends ACommand {
         commands.put(TicketCmd.COMMAND_NAME, new TicketCmd(flagsConfig));
 
         // INFORMATION
-        commands.put(EmoteCmd.COMMAND_NAME, new EmoteCmd());
+        commands.put(CharCmd.COMMAND_NAME, new CharCmd());
         commands.put(HelpCmd.COMMAND_NAME, new HelpCmd());
         commands.put(InviteCmd.COMMAND_NAME, new InviteCmd());
 
@@ -117,6 +122,8 @@ public class CommandManager extends ACommand {
 
         // MODERATION
         commands.put(LockCmd.COMMAND_NAME, new LockCmd());
+        commands.put(BanCmd.COMMAND_NAME, new BanCmd(imageConfig));
+        commands.put(KickCmd.COMMAND_NAME, new KickCmd(imageConfig));
         commands.put(BlacklistCmd.COMMAND_NAME, new BlacklistCmd(bot.getEventWaiter(), commandDisabledRepository));
 
         // search
