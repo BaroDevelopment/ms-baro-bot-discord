@@ -11,9 +11,9 @@ import net.dv8tion.jda.api.EmbedBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmoteCmd extends ACommand implements ICommand {
+public class CharCmd extends ACommand implements ICommand {
 
-    public static final String COMMAND_NAME = "emote";
+    public static final String COMMAND_NAME = "char";
 
     @Override
     public void execute(CommandContext ctx) {
@@ -66,7 +66,7 @@ public class EmoteCmd extends ACommand implements ICommand {
     @Override
     public List<String> getExamples() {
         List<String> samples = new ArrayList<>();
-        samples.add("`emote <emoji|character>`");
+        samples.add("`char <emoji|character>`");
         return samples;
     }
 }

@@ -3,6 +3,7 @@ services:
   discord-bot:
     image: barodev/baro-bot-discord:0.0.1-SNAPSHOT
     container_name: discord-bot
+    hostname: discord-bot
     ports:
       - "5000:5000"
     env_file:
@@ -14,8 +15,12 @@ services:
       - local-network
   postgres:
     image: postgres
+    hostname: postgres
     container_name: postgres
     restart: always
+    environment:
+      - POSTGRES_USER=${SPRING_DATASOURCE_USERNAME}
+      - POSTGRES_PASSWORD=${SPRING_DATASOURCE_PASSWORD}
     ports:
       - "5432:5432"
     env_file:
@@ -27,11 +32,16 @@ services:
   redis:
     image: redis:alpine3.12
     container_name: redis
+    hostname: redis
     restart: always
+    env_file:
+      - .env
+    command: redis-server --requirepass ${SPRING_REDIS_PASSWORD}
     ports:
       - "6379:6379"
     volumes:
       - redist-data-volume:/data
+    #      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
       - local-network
 networks:
