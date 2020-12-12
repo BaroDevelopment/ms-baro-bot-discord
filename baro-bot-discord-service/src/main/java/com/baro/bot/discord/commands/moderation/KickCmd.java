@@ -71,8 +71,7 @@ public class KickCmd extends ACommand implements ICommand {
             eb.setColor(new ColorUtil().getRandomColor());
             eb.setTitle("Server Member got kicked");
             eb.addField("Kicked Member", target.getAsMention(), true);
-            eb.addField("Kicked by", ctx.getEvent().getAuthor().getAsMention(), true);
-            eb.setThumbnail(authorUrl);
+            eb.setThumbnail(target.getUser().getEffectiveAvatarUrl());
             eb.setAuthor(ctx.getEvent().getAuthor().getName(), authorUrl, authorUrl);
             eb.addField("Reason", reason, true);
             eb.setImage(imageConfig.getKickImage());
