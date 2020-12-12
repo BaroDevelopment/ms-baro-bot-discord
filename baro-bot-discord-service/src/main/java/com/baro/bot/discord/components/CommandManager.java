@@ -123,6 +123,7 @@ public class CommandManager extends ACommand {
         commands.put(KickCmd.COMMAND_NAME, new KickCmd(imageConfig));
         commands.put(PurgeCmd.COMMAND_NAME, new PurgeCmd());
         commands.put(MuteCmd.COMMAND_NAME, new MuteCmd());
+        commands.put(UnmuteCmd.COMMAND_NAME, new UnmuteCmd());
         commands.put(ChanneltopicCmd.COMMAND_NAME, new ChanneltopicCmd());
         commands.put(EmoteCmd.COMMAND_NAME, new EmoteCmd());
         commands.put(BlacklistCmd.COMMAND_NAME, new BlacklistCmd(bot.getEventWaiter(), commandDisabledRepository));
