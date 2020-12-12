@@ -150,7 +150,7 @@ public class BanCmd extends ACommand implements ICommand {
 
     private class BanParams {
         @Parameter
-        private String main;
+        private List<String> main;
         @Parameter(names = {"-d", "-days"})
         private int days = 7;
         @Parameter(names = {"-r", "-reason"})

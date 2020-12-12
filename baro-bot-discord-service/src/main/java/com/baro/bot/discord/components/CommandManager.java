@@ -121,6 +121,7 @@ public class CommandManager extends ACommand {
         commands.put(LockCmd.COMMAND_NAME, new LockCmd());
         commands.put(BanCmd.COMMAND_NAME, new BanCmd(imageConfig));
         commands.put(KickCmd.COMMAND_NAME, new KickCmd(imageConfig));
+        commands.put(PurgeCmd.COMMAND_NAME, new PurgeCmd());
         commands.put(ChanneltopicCmd.COMMAND_NAME, new ChanneltopicCmd());
         commands.put(EmoteCmd.COMMAND_NAME, new EmoteCmd());
         commands.put(BlacklistCmd.COMMAND_NAME, new BlacklistCmd(bot.getEventWaiter(), commandDisabledRepository));

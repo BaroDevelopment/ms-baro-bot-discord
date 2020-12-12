@@ -149,7 +149,7 @@ public class KickCmd extends ACommand implements ICommand {
 
     private class KickParams {
         @Parameter
-        private String main;
+        private List<String> main;
         @Parameter(names = {"-r", "-reason"})
         private List<String> reason = Arrays.asList("Not specified");
         @Parameter(names = {"-f", "-fake"})
