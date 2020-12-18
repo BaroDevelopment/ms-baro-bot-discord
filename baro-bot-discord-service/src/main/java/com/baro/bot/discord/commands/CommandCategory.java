@@ -7,5 +7,6 @@ public enum CommandCategory {
     SEARCH,
     INFORMATION,
     OWNER,
-    MODERATION
+    MODERATION,
+    MISC
 }
