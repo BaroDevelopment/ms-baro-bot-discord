@@ -35,6 +35,7 @@ import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Nullable;
@@ -42,6 +43,7 @@ import java.util.*;
 import java.util.regex.Pattern;
 
 @Component
+@Profile("!test")
 public class CommandManager extends ACommand {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(CommandManager.class);

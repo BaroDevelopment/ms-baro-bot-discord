@@ -17,6 +17,7 @@ import net.dv8tion.jda.api.exceptions.PermissionException;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
@@ -33,6 +34,7 @@ import java.util.regex.Pattern;
 import static org.apache.http.protocol.HTTP.USER_AGENT;
 
 @Component
+@Profile("!test")
 public class MusicUtils {
 
     private final BaroBot bot;
