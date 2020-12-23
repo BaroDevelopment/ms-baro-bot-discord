@@ -8,10 +8,7 @@ import com.baro.bot.discord.commands.admin.*;
 import com.baro.bot.discord.commands.information.CharCmd;
 import com.baro.bot.discord.commands.information.HelpCmd;
 import com.baro.bot.discord.commands.information.InviteCmd;
-import com.baro.bot.discord.commands.misc.EmbedCmd;
-import com.baro.bot.discord.commands.misc.JsonCmd;
-import com.baro.bot.discord.commands.misc.PollCmd;
-import com.baro.bot.discord.commands.misc.QuoteCmd;
+import com.baro.bot.discord.commands.misc.*;
 import com.baro.bot.discord.commands.moderation.*;
 import com.baro.bot.discord.commands.music.*;
 import com.baro.bot.discord.commands.music.dj.*;
@@ -124,6 +121,7 @@ public class CommandManager extends ACommand {
         commands.put(EmbedCmd.COMMAND_NAME, new EmbedCmd());
         commands.put(JsonCmd.COMMAND_NAME, new JsonCmd());
         commands.put(QuoteCmd.COMMAND_NAME, new QuoteCmd());
+        commands.put(EightBallCmd.COMMAND_NAME, new EightBallCmd());
 
         // MODERATION
         commands.put(LockCmd.COMMAND_NAME, new LockCmd());
