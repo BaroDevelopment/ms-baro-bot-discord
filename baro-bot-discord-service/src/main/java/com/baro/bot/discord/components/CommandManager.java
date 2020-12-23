@@ -11,6 +11,7 @@ import com.baro.bot.discord.commands.information.InviteCmd;
 import com.baro.bot.discord.commands.misc.EmbedCmd;
 import com.baro.bot.discord.commands.misc.JsonCmd;
 import com.baro.bot.discord.commands.misc.PollCmd;
+import com.baro.bot.discord.commands.misc.QuoteCmd;
 import com.baro.bot.discord.commands.moderation.*;
 import com.baro.bot.discord.commands.music.*;
 import com.baro.bot.discord.commands.music.dj.*;
@@ -122,6 +123,7 @@ public class CommandManager extends ACommand {
         commands.put(PollCmd.COMMAND_NAME, new PollCmd());
         commands.put(EmbedCmd.COMMAND_NAME, new EmbedCmd());
         commands.put(JsonCmd.COMMAND_NAME, new JsonCmd());
+        commands.put(QuoteCmd.COMMAND_NAME, new QuoteCmd());
 
         // MODERATION
         commands.put(LockCmd.COMMAND_NAME, new LockCmd());
