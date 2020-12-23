@@ -20,28 +20,20 @@ public class EightBallCmd extends ACommand implements ICommand {
     public static final Logger LOGGER = LoggerFactory.getLogger(EightBallCmd.class);
     public static final String[] positiveAnswers = {"Absolutely!", "Yes, sure.", "Of course!"};
     public static final String[] negativeAnswers = {"Nah...", "No, really, no...", "I highly doubt that!"};
-    public static final String[] neutralAnswers = {"Maybe...", "Who knows?", "We will see."};
 
     @Override
     public void execute(CommandContext ctx) {
         EmbedBuilder eb = new EmbedBuilder();
-        String[] mergedAnswers = Stream.concat(
-                Stream.concat(Arrays.stream(positiveAnswers.clone()), Arrays.stream(negativeAnswers.clone())),
-                Arrays.stream(neutralAnswers.clone()))
+        String[] mergedAnswers = Stream.concat(Arrays.stream(positiveAnswers.clone()), Arrays.stream(negativeAnswers.clone()))
                 .toArray(String[]::new);
         int randInt = new Random().nextInt(mergedAnswers.length);
         String answer = mergedAnswers[randInt];
-        ctx.getEvent().getChannel().sendMessage(eb.setDescription(answer).setColor(getColor(answer)).build()).queue();
+        ctx.getEvent().getChannel().sendMessage(eb.setDescription(answer)
+                .setColor(getColor(answer)).build()).queue();
     }
 
     private Color getColor(String answer) {
-        if (Arrays.stream(positiveAnswers).anyMatch(answer::equals)) {
-            return Color.GREEN;
-        }
-        if (Arrays.stream(negativeAnswers).anyMatch(answer::equals)) {
-            return Color.RED;
-        }
-        return Color.DARK_GRAY;
+        return Arrays.asList(positiveAnswers).contains(answer) ? Color.GREEN : Color.RED;
     }
 
     @Override
