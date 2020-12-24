@@ -71,7 +71,8 @@ public class EmbedCmd extends ACommand implements ICommand {
             }
         // timestamp
         try {
-            eb.setTimestamp(OffsetDateTime.parse(em.getTimestamp()));
+            if (em.getTimestamp() != null)
+                eb.setTimestamp(OffsetDateTime.parse(em.getTimestamp()));
         } catch (DateTimeParseException e) {
             // ignore
         }
