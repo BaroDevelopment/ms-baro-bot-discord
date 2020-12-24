@@ -122,6 +122,7 @@ public class CommandManager extends ACommand {
         commands.put(JsonCmd.COMMAND_NAME, new JsonCmd());
         commands.put(QuoteCmd.COMMAND_NAME, new QuoteCmd());
         commands.put(EightBallCmd.COMMAND_NAME, new EightBallCmd());
+        commands.put(RandomReactionCmd.COMMAND_NAME, new RandomReactionCmd());
 
         // MODERATION
         commands.put(LockCmd.COMMAND_NAME, new LockCmd());
