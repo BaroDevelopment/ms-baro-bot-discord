@@ -88,9 +88,11 @@ public class Listener extends ListenerAdapter {
     public void onMessageReceived(@Nullable MessageReceivedEvent event) {
 
         if (event.isWebhookMessage() || event.getAuthor().isBot()) return;
-
+        // commands
         manager.handle(event);
+        // redis
         redisDiscordMessageHandler.save(event.getMessage());
+        // vote
         new VoteSystem().handleVotes(bot, event);
     }
 

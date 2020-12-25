@@ -26,12 +26,13 @@ import com.baro.bot.discord.model.entities.MusicEntity;
 import com.baro.bot.discord.repository.CommandDisabledRepository;
 import com.baro.bot.discord.repository.GuildRepository;
 import com.baro.bot.discord.repository.MusicRepository;
+import com.baro.bot.discord.repository.TagsRepository;
 import com.baro.bot.discord.service.BaroBot;
-import com.sun.istack.NotNull;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.ChannelType;
 import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Profile;
@@ -45,8 +46,8 @@ import java.util.regex.Pattern;
 @Profile("!test")
 public class CommandManager extends ACommand {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(CommandManager.class);
-    private final Map<String, ICommand> commands;
+    public static final Logger LOGGER = LoggerFactory.getLogger(CommandManager.class);
+    private final Map<String, ICommand> commands = new HashMap();
     private final BaroBot bot;
     private final BotConfig botConfig;
     private final ImageConfig imageConfig;
@@ -54,17 +55,18 @@ public class CommandManager extends ACommand {
     private final GuildRepository guildRepository;
     private final MusicRepository musicRepository;
     private final CommandDisabledRepository commandDisabledRepository;
+    private final TagsRepository tagsRepository;
 
     public CommandManager(BaroBot bot, BotConfig botConfig, FlagsConfig flagsConfig, ImageConfig imageConfig, GuildRepository guildRepository,
-                          MusicRepository musicRepository, CommandDisabledRepository commandDisabledRepository) {
+                          MusicRepository musicRepository, CommandDisabledRepository commandDisabledRepository, TagsRepository tagsRepository) {
         this.bot = bot;
         this.botConfig = botConfig;
         this.flagsConfig = flagsConfig;
         this.imageConfig = imageConfig;
         this.guildRepository = guildRepository;
         this.musicRepository = musicRepository;
+        this.tagsRepository = tagsRepository;
         this.commandDisabledRepository = commandDisabledRepository;
-        this.commands = new HashMap();
 
         //ADMIN
         commands.put(PrefixCmd.COMMAND_NAME, new PrefixCmd(guildRepository, botConfig));
@@ -123,6 +125,7 @@ public class CommandManager extends ACommand {
         commands.put(QuoteCmd.COMMAND_NAME, new QuoteCmd());
         commands.put(EightBallCmd.COMMAND_NAME, new EightBallCmd());
         commands.put(RandomReactionCmd.COMMAND_NAME, new RandomReactionCmd());
+        commands.put(TagsCmd.COMMAND_NAME, new TagsCmd(tagsRepository));
 
         // MODERATION
         commands.put(LockCmd.COMMAND_NAME, new LockCmd());
@@ -156,9 +159,14 @@ public class CommandManager extends ACommand {
         String invoke = args[0].toLowerCase();
         ICommand cmd = getCommand(invoke);
 
+        CommandContext ctx = new CommandContext(bot, prefix, args, event, invoke, this);
+
+        // tags
+        ((TagsCmd) commands.get("tag")).handleTagMessage(event.getGuild().getIdLong(), invoke, event.getTextChannel());
+
         if (cmd == null) return;
 
-        CommandContext ctx = new CommandContext(bot, prefix, args, event, invoke, this);
+
         if (!argsProvided(ctx, cmd)) {
             event.getChannel().sendMessage("Please provide arguments").queue();
             return;

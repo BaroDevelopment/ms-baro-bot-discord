@@ -8,6 +8,7 @@ import com.baro.bot.discord.model.api.discord.embed.DiscordEmbedModel;
 import com.baro.bot.discord.model.api.discord.embed.EmbedFieldModel;
 import com.baro.bot.discord.model.api.discord.embed.EmbedModel;
 import com.baro.bot.discord.util.ColorUtil;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.MessageBuilder;
@@ -23,18 +24,8 @@ public class EmbedCmd extends ACommand implements ICommand {
     public static final String COMMAND_NAME = "embed";
     public static final Logger LOGGER = LoggerFactory.getLogger(EmbedCmd.class);
 
-    @Override
-    public void execute(CommandContext ctx) {
-        try {
-            DiscordEmbedModel embedModel = new ObjectMapper().readValue(ctx.getArgs(), DiscordEmbedModel.class);
-            ctx.getEvent().getChannel().sendMessage(jsonToEmbed(embedModel, ctx.getArgs())).queue();
-        } catch (Exception e) {
-            EmbedBuilder eb = new EmbedBuilder().setColor(new ColorUtil().getRandomColor()).setDescription(ctx.getArgs());
-            ctx.getEvent().getChannel().sendMessage(eb.build()).queue();
-        }
-    }
-
-    private Message jsonToEmbed(DiscordEmbedModel o, String json) {
+    public static Message jsonToEmbed(String json) throws JsonProcessingException {
+        DiscordEmbedModel o = new ObjectMapper().readValue(json, DiscordEmbedModel.class);
         EmbedBuilder eb = new EmbedBuilder();
         EmbedModel em = o.getEmbed();
         // description
@@ -78,6 +69,16 @@ public class EmbedCmd extends ACommand implements ICommand {
         }
 
         return new MessageBuilder().setEmbed(eb.build()).setContent(o.getContent()).build();
+    }
+
+    @Override
+    public void execute(CommandContext ctx) {
+        try {
+            ctx.getEvent().getChannel().sendMessage(jsonToEmbed(ctx.getArgs())).queue();
+        } catch (Exception e) {
+            EmbedBuilder eb = new EmbedBuilder().setColor(new ColorUtil().getRandomColor()).setDescription(ctx.getArgs());
+            ctx.getEvent().getChannel().sendMessage(eb.build()).queue();
+        }
     }
 
     @Override

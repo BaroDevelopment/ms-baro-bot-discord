@@ -1,5 +1,6 @@
 package com.baro.bot.discord.model.entities;
 
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
@@ -8,6 +9,7 @@ public class TagsEntity {
 
     @EmbeddedId
     TagsEntityId tagsEntityId;
+    @Column(length = 2056)
     private String value;
 
     public TagsEntity() {
