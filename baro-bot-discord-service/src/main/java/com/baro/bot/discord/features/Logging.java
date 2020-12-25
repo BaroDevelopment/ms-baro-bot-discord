@@ -399,10 +399,11 @@ public class Logging {
         eb.addField("Username", user.getName() + "#" + user.getDiscriminator(), true);
         eb.addField("User ID", user.getId(), true);
         eb.addBlankField(true);
-        // TODO: Joined Date
         eb.addField("Account Creation", FormatUtil.formatTime(event.getUser().getTimeCreated()), true);
-        eb.addField("Join Date", FormatUtil.formatTime(event.getMember().getTimeJoined()), true);
-        eb.addField("Been in server for", Instant.ofEpochSecond(event.getMember().getTimeJoined().toEpochSecond()).until(Instant.now(), ChronoUnit.DAYS) + " days", true);
+        if (event.getMember() != null) {
+            eb.addField("Join Date", FormatUtil.formatTime(event.getMember().getTimeJoined()), true);
+            eb.addField("Been in server for", Instant.ofEpochSecond(event.getMember().getTimeJoined().toEpochSecond()).until(Instant.now(), ChronoUnit.DAYS) + " days", true);
+        }
         eb.setTimestamp(OffsetDateTime.now());
         postLog(eb, event.getGuild(), "BAROBOT_SERVER_LEAVE", null);
     }

@@ -1,5 +1,7 @@
 package com.baro.bot.discord.redis;
 
+import com.baro.bot.discord.config.BotConfig;
+import com.baro.bot.discord.service.BaroBot;
 import io.lettuce.core.LettuceFutures;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisFuture;
@@ -8,14 +10,13 @@ import io.lettuce.core.api.StatefulRedisConnection;
 import io.lettuce.core.api.async.RedisAsyncCommands;
 import io.lettuce.core.api.sync.RedisCommands;
 import io.lettuce.core.pubsub.RedisPubSubListener;
-import io.lettuce.core.pubsub.StatefulRedisPubSubConnection;
-import io.lettuce.core.pubsub.api.async.RedisPubSubAsyncCommands;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.mockito.Mock;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,15 +24,26 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@ActiveProfiles("test")
 class LettuceIntegrationLiveTest {
 
-    private static Logger log = LoggerFactory.getLogger(LettuceIntegrationLiveTest.class);
+    public static Logger LOGGER = LoggerFactory.getLogger(LettuceIntegrationLiveTest.class);
 
-    private static StatefulRedisConnection<String, String> redisConnection;
+    public static StatefulRedisConnection<String, String> redisConnection;
 
-    private static RedisClient redisClient;
+    public static RedisClient redisClient;
+
+    @Autowired
+    public BotConfig botConfig;
+
+    // mock bot to prevent it from starting
+    @Mock
+    BaroBot bot;
 
     @BeforeEach
     public void flush() {
@@ -39,9 +51,8 @@ class LettuceIntegrationLiveTest {
     }
 
     @BeforeAll
-    public static void setUp() {
-        // Docker defaults to mapping redis port to 32768
-        redisClient = RedisClient.create("redis://localhost:6379/0");
+    public void setUp() {
+        redisClient = RedisClient.create("redis://baro:" + botConfig.getRedisPassword() + "@localhost:6379/0");
         redisConnection = redisClient.connect();
     }
 
@@ -256,29 +267,29 @@ class LettuceIntegrationLiveTest {
 
     }
 
-    @Test
-    void givenPubSubChannel_whenMessage_thenMessageReceived() throws Exception {
-
-        Listener listener = new Listener();
-        StatefulRedisPubSubConnection<String, String> connection = redisClient.connectPubSub();
-        StatefulRedisPubSubConnection<String, String> pubconnection = redisClient.connectPubSub();
-        connection.addListener(listener);
-
-        RedisPubSubAsyncCommands<String, String> async = connection.async();
-        async.subscribe("channel");
-
-        RedisPubSubAsyncCommands<String, String> pubasync = pubconnection.async();
-        RedisFuture<Long> result = pubasync.publish("channel", "hithere");
-
-        for (int i = 0; i < 12; i++) {
-            if (!result.isDone())
-                Thread.sleep(10000);
-        }
-
-        // Need a long wait for publish to complete, depending on system.
-        result.get(30, TimeUnit.SECONDS);
-        assertTrue(listener.getMessage().equals("hithere"));
-    }
+//    @Test
+//    void givenPubSubChannel_whenMessage_thenMessageReceived() throws Exception {
+//
+//        Listener listener = new Listener();
+//        StatefulRedisPubSubConnection<String, String> connection = redisClient.connectPubSub();
+//        StatefulRedisPubSubConnection<String, String> pubconnection = redisClient.connectPubSub();
+//        connection.addListener(listener);
+//
+//        RedisPubSubAsyncCommands<String, String> async = connection.async();
+//        async.subscribe("channel");
+//
+//        RedisPubSubAsyncCommands<String, String> pubasync = pubconnection.async();
+//        RedisFuture<Long> result = pubasync.publish("channel", "hithere");
+//
+//        for (int i = 0; i < 12; i++) {
+//            if (!result.isDone())
+//                Thread.sleep(10000);
+//        }
+//
+//        // Need a long wait for publish to complete, depending on system.
+//        result.get(30, TimeUnit.SECONDS);
+//        assertEquals(listener.getMessage(), "hithere");
+//    }
 
     private static class Listener implements RedisPubSubListener<String, String> {
 
@@ -290,7 +301,7 @@ class LettuceIntegrationLiveTest {
 
         @Override
         public void message(String channel, String message) {
-            log.debug("Got {} on {}", message, channel);
+            LOGGER.debug("Got {} on {}", message, channel);
             this.message = message;
         }
 
@@ -301,7 +312,7 @@ class LettuceIntegrationLiveTest {
 
         @Override
         public void subscribed(String channel, long count) {
-            log.debug("Subscribed to {}", channel);
+            LOGGER.debug("Subscribed to {}", channel);
         }
 
         @Override

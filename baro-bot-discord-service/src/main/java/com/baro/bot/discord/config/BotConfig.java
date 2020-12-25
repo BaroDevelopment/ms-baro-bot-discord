@@ -17,6 +17,7 @@ public class BotConfig {
     private final String oxfordDictionaryApiKey;
     private final int redisMessageCacheDurationMinutes;
     private final List<String> botOwnerIds;
+    private final String redisPassword;
 
     public BotConfig(
             @Value("${token}") String token,
@@ -26,12 +27,14 @@ public class BotConfig {
             @Value("${google.search.api.key}") String googleApiKey,
             @Value("${google.search.engine.id}") String googleEngineId,
             @Value("${oxford.dictionary.app.id}") String oxfordDictionaryAppId,
+            @Value("${spring.redis.password}") String redisPassword,
             @Value("${oxford.dictionary.api.key}") String oxfordDictionaryApiKey,
             @Value("${owner.ids}") List<String> botOwnerIds) {
         this.token = token;
         this.activity = activity;
         this.prefix = prefix;
         this.botOwnerIds = botOwnerIds;
+        this.redisPassword = redisPassword;
         this.googleApiKey = googleApiKey;
         this.googleEngineId = googleEngineId;
         this.oxfordDictionaryAppId = oxfordDictionaryAppId;
@@ -73,5 +76,9 @@ public class BotConfig {
 
     public String getOxfordDictionaryApiKey() {
         return oxfordDictionaryApiKey;
+    }
+
+    public String getRedisPassword() {
+        return redisPassword;
     }
 }

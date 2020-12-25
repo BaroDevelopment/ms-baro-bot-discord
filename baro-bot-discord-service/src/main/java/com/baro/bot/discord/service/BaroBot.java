@@ -17,12 +17,14 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.LoginException;
 import java.util.concurrent.Executors;
 
 @Service
+@Profile("!test")
 public class BaroBot {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaroBot.class);

@@ -1,8 +1,11 @@
 package com.baro.bot.discord.commands;
 
+import com.baro.bot.discord.util.ColorUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Message;
 
 import java.awt.*;
+import java.util.concurrent.CompletableFuture;
 
 public abstract class ACommand {
 
@@ -22,6 +25,13 @@ public abstract class ACommand {
         EmbedBuilder eb = new EmbedBuilder().setColor(Color.ORANGE);
         eb.setDescription(text);
         ctx.getEvent().getChannel().sendMessage(eb.build()).queue();
+    }
+
+    public CompletableFuture<Message> sendWaitMessage(CommandContext ctx, String message) {
+        return ctx.getEvent().getChannel().sendMessage(new EmbedBuilder()
+                .setColor(new ColorUtil().getRandomColor())
+                .setDescription("\u231B " + message)
+                .build()).submit();
     }
 
     public void replayDM(CommandContext ctx, EmbedBuilder eb) {
