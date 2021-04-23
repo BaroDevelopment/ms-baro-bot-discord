@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %boldCyan(%-34.-34thread) %red(%10.10X{jda.shard}) %boldGreen(%-15.-15logger{0})
+                %highlight(%-6level) %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE" class="ch.qos.logback.core.FileAppender">
+        <file>debug.log</file>
+        <append>true</append>
+        <encoder>
+            <pattern>%-4relative [%thread] %-5level %logger{35} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--    <root level="debug">-->
+    <!--        <appender-ref ref="STDOUT" />-->
+    <!--    </root>-->
+
+    <logger name="org.springframework.web" level="debug">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <logger name="com.baro.bot.discord" level="debug">
+        <appender-ref ref="STDOUT"/>
+        <!--        <appender-ref ref="FILE" />-->
+    </logger>
+
+    <logger name="io.netty.util" level="error"/>
+</configuration>

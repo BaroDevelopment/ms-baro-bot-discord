@@ -8,6 +8,7 @@ import com.baro.bot.discord.commands.admin.*;
 import com.baro.bot.discord.commands.information.CharCmd;
 import com.baro.bot.discord.commands.information.HelpCmd;
 import com.baro.bot.discord.commands.information.InviteCmd;
+import com.baro.bot.discord.commands.information.ServerInfoCmd;
 import com.baro.bot.discord.commands.misc.*;
 import com.baro.bot.discord.commands.moderation.*;
 import com.baro.bot.discord.commands.music.*;
@@ -79,6 +80,7 @@ public class CommandManager extends ACommand {
         commands.put(CharCmd.COMMAND_NAME, new CharCmd());
         commands.put(HelpCmd.COMMAND_NAME, new HelpCmd());
         commands.put(InviteCmd.COMMAND_NAME, new InviteCmd());
+        commands.put(ServerInfoCmd.COMMAND_NAME, new ServerInfoCmd());
 
         // MUSIC
         commands.put(PlayCmd.COMMAND_NAME, new PlayCmd());
