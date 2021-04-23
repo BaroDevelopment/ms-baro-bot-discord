@@ -1,22 +1,22 @@
 version: "3.8"
 services:
-  discord-bot:
-    image: barodev/baro-bot-discord:0.0.2
-    container_name: discord-bot
-    hostname: discord-bot
+  barobot-discord:
+    image: barodev/baro-bot-discord:0.0.3
+    container_name: barobot-discord
+    hostname: barobot-discord
     ports:
       - "5000:5000"
     env_file:
       - .env
     depends_on:
-      - postgres
-      - redis
+      - barobot-postgres
+      - barobot-redis
     networks:
-      - local-network
-  postgres:
+      - barobot-local-network
+  barobot-postgres:
     image: postgres
-    hostname: postgres
-    container_name: postgres
+    hostname: barobot-postgres
+    container_name: barobot-postgres
     restart: always
     environment:
       - POSTGRES_USER=${SPRING_DATASOURCE_USERNAME}
@@ -26,13 +26,13 @@ services:
     env_file:
       - .env
     volumes:
-      - postgres-data-volume:/var/lib/postgresql/data
+      - barobot-postgres-data:/var/lib/postgresql/data
     networks:
-      - local-network
-  redis:
+      - barobot-local-network
+  barobot-redis:
     image: redis:alpine3.12
-    container_name: redis
-    hostname: redis
+    container_name: barobot-redis
+    hostname: barobot-redis
     restart: always
     env_file:
       - .env
@@ -40,12 +40,12 @@ services:
     ports:
       - "6379:6379"
     volumes:
-      - redist-data-volume:/data
+      - barobot-redist-data:/data
     #      - ./docker/redis/redis.conf:/usr/local/etc/redis/redis.conf
     networks:
-      - local-network
+      - barobot-local-network
 networks:
-  local-network:
+  barobot-local-network:
 volumes:
-  postgres-data-volume:
-  redist-data-volume:
+  barobot-postgres-data:
+  barobot-redist-data:
