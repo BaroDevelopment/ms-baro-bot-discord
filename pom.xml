@@ -7,7 +7,7 @@
     <groupId>com.baro.bot.discord</groupId>
     <artifactId>ms-baro-bot-discord</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.3</version>
+    <version>0.0.4-SNAPSHOT</version>
 
     <modules>
         <module>baro-bot-discord-docker</module>
