@@ -9,6 +9,7 @@ import java.util.List;
 public class BotConfig {
 
     private final String token;
+    private final String emoteGuildId;
     private final String activity;
     private final String prefix;
     private final String googleApiKey;
@@ -21,6 +22,7 @@ public class BotConfig {
 
     public BotConfig(
             @Value("${token}") String token,
+            @Value("${emoteGuildId}") String emoteGuildId,
             @Value("${activity}") String activity,
             @Value("${redis.message.cache.duration.minutes}") int redisMessageCacheDurationMinutes,
             @Value("${prefix}") String prefix,
@@ -31,6 +33,7 @@ public class BotConfig {
             @Value("${oxford.dictionary.api.key}") String oxfordDictionaryApiKey,
             @Value("${owner.ids}") List<String> botOwnerIds) {
         this.token = token;
+        this.emoteGuildId = emoteGuildId;
         this.activity = activity;
         this.prefix = prefix;
         this.botOwnerIds = botOwnerIds;
@@ -80,5 +83,9 @@ public class BotConfig {
 
     public String getRedisPassword() {
         return redisPassword;
+    }
+
+    public String getEmoteGuildId() {
+        return emoteGuildId;
     }
 }

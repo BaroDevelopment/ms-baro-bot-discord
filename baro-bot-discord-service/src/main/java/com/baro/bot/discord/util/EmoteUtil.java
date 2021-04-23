@@ -13,7 +13,7 @@ public class EmoteUtil {
     }
 
     public Emote getBooleanEmote(boolean val) {
-        Guild guild = bot.getJda().getGuildById(Statics.EMOTE_GUILD_ID);
+        Guild guild = bot.getJda().getGuildById(bot.getBotConfig().getEmoteGuildId());
         if (val)
             return guild.getEmotesByName("enabled", false).get(0);
         return guild.getEmotesByName("disabled", false).get(0);
@@ -22,7 +22,7 @@ public class EmoteUtil {
     public String getEmojiAsString(String name) {
         String result = "Emoji not found";
         try {
-            result = bot.getJda().getGuildById(Statics.EMOTE_GUILD_ID).getEmotesByName(name, false).get(0).getAsMention() + " ";
+            result = bot.getJda().getGuildById(bot.getBotConfig().getEmoteGuildId()).getEmotesByName(name, false).get(0).getAsMention() + " ";
             return result;
         } catch (Exception ex) {
             System.out.println("Emoji not found. ");
@@ -33,7 +33,7 @@ public class EmoteUtil {
     public Emote getEmote(String name) {
         Emote result = null;
         try {
-            result = bot.getJda().getGuildById(Statics.EMOTE_GUILD_ID).getEmotesByName(name, false).get(0);
+            result = bot.getJda().getGuildById(bot.getBotConfig().getEmoteGuildId()).getEmotesByName(name, false).get(0);
             return result;
         } catch (IndexOutOfBoundsException ex) {
             ex.printStackTrace();

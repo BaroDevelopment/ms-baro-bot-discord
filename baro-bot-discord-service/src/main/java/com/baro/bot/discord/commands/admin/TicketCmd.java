@@ -38,7 +38,7 @@ public class TicketCmd extends ACommand implements ICommand {
         // handleTicket
         if (event.getChannel().getTopic() != null
                 && event.getChannel().getTopic().toUpperCase().contains(Flags.BAROBOT_TICKET_CHANNEL.toString())
-                && event.getReactionEmote().getName().equals("paladin")
+                && event.getReactionEmote().getName().equals("ticket")
                 && !event.getUser().isBot()
                 && FinderUtil.findTextChannels("ticket-" + event.getUser().getName(), event.getGuild()).isEmpty()) {
             try {
@@ -85,7 +85,7 @@ public class TicketCmd extends ACommand implements ICommand {
                             channel.getManager().putPermissionOverride(everyone, null, deny).queue();
                             channel.sendMessage(getTicketEmbed(ctx.getBot().getJda().getSelfUser().getName(),
                                     ctx.getBot().getJda().getSelfUser().getEffectiveAvatarUrl()).build()).queue(
-                                    message -> message.addReaction(new EmoteUtil(ctx.getBot()).getEmote("paladin")).queue());
+                                    message -> message.addReaction(new EmoteUtil(ctx.getBot()).getEmote("ticket")).queue());
                         }));
     }
 
