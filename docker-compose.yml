@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   discord-bot:
-    image: barodev/baro-bot-discord:0.0.1-SNAPSHOT
+    image: barodev/baro-bot-discord:0.0.1
     container_name: discord-bot
     hostname: discord-bot
     ports:
