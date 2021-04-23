@@ -2,9 +2,6 @@ package com.baro.bot.discord.util;
 
 public class Statics {
 
-    //////////////////////////////////////   GUILDS   //////////////////////////////////////
-    public static final String EMOTE_GUILD_ID = "393207704211947521";
-
     //////////////////////////////////////   IMAGES   //////////////////////////////////////
     public static final String IMAGE_YOUTUBE_GIF = "https://cdn.discordapp.com/attachments/396964573007052800/443750201195364362/YouTube.gif";
     public static final String IMAGE_YOUTUBE_FOOTER = "https://media.discordapp.net/attachments/305958166443720716/390217330228985857/maxresdefault.png?width=1202&height=677";

@@ -130,4 +130,8 @@ public class BaroBot {
     public Listener getListener() {
         return listener;
     }
+
+    public BotConfig getBotConfig() {
+        return botConfig;
+    }
 }
