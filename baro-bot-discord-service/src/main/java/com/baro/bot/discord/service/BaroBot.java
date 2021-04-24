@@ -6,6 +6,7 @@ import com.baro.bot.discord.commands.music.audio.PlayerManager;
 import com.baro.bot.discord.commands.music.playlist.PlaylistLoader;
 import com.baro.bot.discord.components.Listener;
 import com.baro.bot.discord.config.BotConfig;
+import com.baro.bot.discord.config.FlagsConfig;
 import com.baro.bot.discord.util.ConsoleColors;
 import com.jagrosh.jdautilities.commons.waiter.EventWaiter;
 import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
@@ -29,6 +30,7 @@ public class BaroBot {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BaroBot.class);
     private final BotConfig botConfig;
+    private final FlagsConfig flagsConfig;
     private final PlayerManager playerManager;
     private final NowplayingHandler nowplayingHandler;
     private final PlaylistLoader playlistLoader;
@@ -37,8 +39,9 @@ public class BaroBot {
     private JDA jda;
     private boolean shuttingDown = false;
 
-    public BaroBot(BotConfig botConfig, Listener listener) {
+    public BaroBot(BotConfig botConfig, Listener listener, FlagsConfig flagsConfig) {
         this.botConfig = botConfig;
+        this.flagsConfig = flagsConfig;
         this.eventWaiter = new EventWaiter();
         this.listener = listener;
         this.playerManager = new PlayerManager(this);
@@ -133,5 +136,9 @@ public class BaroBot {
 
     public BotConfig getBotConfig() {
         return botConfig;
+    }
+
+    public FlagsConfig getFlagsConfig() {
+        return flagsConfig;
     }
 }
