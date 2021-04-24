@@ -4,7 +4,6 @@ import com.baro.bot.discord.commands.ACommand;
 import com.baro.bot.discord.commands.CommandCategory;
 import com.baro.bot.discord.commands.CommandContext;
 import com.baro.bot.discord.commands.ICommand;
-import com.baro.bot.discord.util.Flags;
 import net.dv8tion.jda.api.Permission;
 import net.dv8tion.jda.api.entities.PermissionOverride;
 import net.dv8tion.jda.api.entities.Role;
@@ -29,7 +28,7 @@ public class LockCmd extends ACommand implements ICommand {
             return EnumSet.noneOf(Permission.class);
     }
 
-    private void lock(TextChannel channel) {
+    private void lock(TextChannel channel, CommandContext ctx) {
         Role everyone = channel.getGuild().getPublicRole();
         EnumSet<Permission> allowed = getPermission(everyone, channel, true);
         EnumSet<Permission> deny = getPermission(everyone, channel, false);
@@ -44,20 +43,20 @@ public class LockCmd extends ACommand implements ICommand {
             channel.getManager().putPermissionOverride(everyone, allowed, deny).queue();
             // change topic
             String topic = channel.getTopic();
-            channel.getManager().setTopic(topic + Flags.BAROBOT_LOCK.toString()).queue();
+            channel.getManager().setTopic(topic + ctx.getBot().getFlagsConfig().getLock()).queue();
         } else {
             // already locked
         }
     }
 
-    private void lockAll(List<TextChannel> channels) {
+    private void lockAll(List<TextChannel> channels, CommandContext ctx) {
         for (TextChannel c : channels)
-            lock(c);
+            lock(c, ctx);
     }
 
-    private void unlock(TextChannel channel) {
+    private void unlock(TextChannel channel, CommandContext ctx) {
         String topic = channel.getTopic();
-        if (topic != null && topic.contains(Flags.BAROBOT_LOCK.toString())) {
+        if (topic != null && topic.contains(ctx.getBot().getFlagsConfig().getLock())) {
             // unlock channel
             Role everyone = channel.getGuild().getPublicRole();
             EnumSet<Permission> allowed = getPermission(everyone, channel, true);
@@ -65,13 +64,13 @@ public class LockCmd extends ACommand implements ICommand {
             deny.remove(Permission.MESSAGE_WRITE);
             channel.getManager().putPermissionOverride(everyone, allowed, deny).queue();
             // change topic
-            channel.getManager().setTopic(topic.replace(Flags.BAROBOT_LOCK.toString(), "")).queue();
+            channel.getManager().setTopic(topic.replace(ctx.getBot().getFlagsConfig().getLock(), "")).queue();
         }
     }
 
-    private void unlockAll(List<TextChannel> channels) {
+    private void unlockAll(List<TextChannel> channels, CommandContext ctx) {
         for (TextChannel c : channels)
-            lock(c);
+            lock(c, ctx);
     }
 
     @Override
@@ -80,25 +79,25 @@ public class LockCmd extends ACommand implements ICommand {
         switch (ctx.getInvoke()) {
             case "lock":
                 if (!channels.isEmpty())
-                    lockAll(channels);
+                    lockAll(channels, ctx);
                 else
-                    lock(ctx.getEvent().getTextChannel());
+                    lock(ctx.getEvent().getTextChannel(), ctx);
 
                 sendSuccess(ctx, ":lock: Locked the channel");
                 break;
             case "lockall":
-                lockAll(ctx.getEvent().getGuild().getTextChannels());
+                lockAll(ctx.getEvent().getGuild().getTextChannels(), ctx);
                 sendSuccess(ctx, ":lock: Locked ALL channels!");
                 break;
             case "unlock":
                 if (!channels.isEmpty())
-                    unlockAll(channels);
+                    unlockAll(channels, ctx);
                 else
-                    unlock(ctx.getEvent().getTextChannel());
+                    unlock(ctx.getEvent().getTextChannel(), ctx);
                 sendSuccess(ctx, ":unlock: Unlocked the channel");
                 break;
             case "unlockall":
-                unlockAll(ctx.getEvent().getGuild().getTextChannels());
+                unlockAll(ctx.getEvent().getGuild().getTextChannels(), ctx);
                 sendSuccess(ctx, ":unlock: Unlocked ALL channels!");
                 break;
         }

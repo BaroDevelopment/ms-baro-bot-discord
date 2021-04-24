@@ -98,7 +98,7 @@ public class Listener extends ListenerAdapter {
 
     @Override
     public void onGuildMessageReactionAdd(@Nonnull GuildMessageReactionAddEvent event) {
-        TicketCmd.handleTickets(bot, event);
+        new TicketCmd(bot.getFlagsConfig()).handleTickets(bot, event);
     }
 
     @Override

@@ -8,7 +8,6 @@ import com.baro.bot.discord.config.FlagsConfig;
 import com.baro.bot.discord.service.BaroBot;
 import com.baro.bot.discord.util.ColorUtil;
 import com.baro.bot.discord.util.EmoteUtil;
-import com.baro.bot.discord.util.Flags;
 import com.jagrosh.jdautilities.commons.utils.FinderUtil;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.Permission;
@@ -33,11 +32,11 @@ public class TicketCmd extends ACommand implements ICommand {
         this.flagsConfig = flagsConfig;
     }
 
-    public static void handleTickets(BaroBot bot, GuildMessageReactionAddEvent event) {
+    public void handleTickets(BaroBot bot, GuildMessageReactionAddEvent event) {
         if (!event.getChannel().getType().equals(ChannelType.TEXT)) return;
         // handleTicket
         if (event.getChannel().getTopic() != null
-                && event.getChannel().getTopic().toUpperCase().contains(Flags.BAROBOT_TICKET_CHANNEL.toString())
+                && event.getChannel().getTopic().toUpperCase().contains(flagsConfig.getTicket())
                 && event.getReactionEmote().getName().equals("ticket")
                 && !event.getUser().isBot()
                 && FinderUtil.findTextChannels("ticket-" + event.getUser().getName(), event.getGuild()).isEmpty()) {
