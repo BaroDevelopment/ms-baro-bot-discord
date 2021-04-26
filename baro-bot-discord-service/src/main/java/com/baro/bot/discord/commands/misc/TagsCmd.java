@@ -90,7 +90,7 @@ public class TagsCmd extends ACommand implements ICommand {
     public void execute(CommandContext ctx) {
         if (ctx.getArgs().isEmpty() || ctx.getInvoke().equals("tags")) {
             displayTags(ctx);
-        } else if (ctx.getArgs().split(" ").length > 3 && ctx.getArgs().split(" ")[0].equalsIgnoreCase("add")) {
+        } else if (ctx.getArgs().split(" ").length == 3 && ctx.getArgs().split(" ")[0].equalsIgnoreCase("add")) {
             Long serverId = ctx.getEvent().getGuild().getIdLong();
             String tag = ctx.getArgs().split(" ")[1];
             String value = String.join(" ", Arrays.copyOfRange(ctx.getArgs().split(" "), 2, ctx.getArgs().split(" ").length));
@@ -101,6 +101,15 @@ public class TagsCmd extends ACommand implements ICommand {
             Long serverId = ctx.getEvent().getGuild().getIdLong();
             String tag = ctx.getArgs().split(" ")[1];
             removeTag(serverId, tag, ctx);
+        }
+        else {
+            EmbedBuilder eb = new EmbedBuilder()
+                    .setColor(new ColorUtil().getRandomColor())
+                    .setTitle("Insufficient arguments")
+                    .addField("Example - Adding a tag", "```html\n" + ctx.getBot().getBotConfig().getPrefix() + "tag add <key> <value>\n```", false)
+                    .addField("Example - Removing a tag", "```html\n" + ctx.getBot().getBotConfig().getPrefix() + "tag remove <key>\n```", false);
+
+            ctx.getEvent().getChannel().sendMessage(eb.build()).queue();
         }
     }
 
