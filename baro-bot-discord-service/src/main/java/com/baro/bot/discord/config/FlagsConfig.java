@@ -28,9 +28,9 @@ public class FlagsConfig {
 
     public FlagsConfig
             (
-                    @Value("${TICKET}") String ticket,
-                    @Value("${VOTE}") String vote,
-                    @Value("${LOCK}") String lock,
+                    @Value("${ticket}") String ticket,
+                    @Value("${vote}") String vote,
+                    @Value("${lock}") String lock,
                     @Value("${nameLog}") String nameLog,
                     @Value("${discriminatorLog}") String discriminatorLog,
                     @Value("${avatarLog}") String avatarLog,

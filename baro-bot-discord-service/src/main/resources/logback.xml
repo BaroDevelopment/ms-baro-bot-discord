@@ -17,15 +17,11 @@
 
     <root level="info">
         <appender-ref ref="STDOUT"/>
+<!--        <appender-ref ref="FILE"/>-->
     </root>
 
     <logger name="org.springframework.web" level="debug">
         <appender-ref ref="STDOUT"/>
-    </logger>
-
-    <logger name="com.baro.bot.discord" level="debug">
-        <appender-ref ref="STDOUT"/>
-        <!--        <appender-ref ref="FILE"/>-->
     </logger>
 
     <logger name="io.netty.util" level="error"/>

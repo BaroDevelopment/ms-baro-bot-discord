@@ -79,6 +79,7 @@ public class BaroBot {
         LOGGER.info(ConsoleColors.PURPLE_BOLD_BRIGHT + "---------------------------------");
         LOGGER.info("Logged in as: " + jda.getSelfUser().getName() + "#" + jda.getSelfUser().getDiscriminator());
         LOGGER.info("UserID: " + jda.getSelfUser().getId());
+        LOGGER.info("Default Prefix: " + botConfig.getPrefix());
         LOGGER.info("---------------------------------" + ConsoleColors.RESET);
     }
 
