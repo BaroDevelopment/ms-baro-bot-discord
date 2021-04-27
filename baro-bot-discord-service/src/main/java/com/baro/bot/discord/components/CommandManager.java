@@ -150,10 +150,6 @@ public class CommandManager extends ACommand {
 
         String prefix = event.getChannelType() == ChannelType.PRIVATE ? botConfig.getPrefix() : getPrefix(event.getGuild().getIdLong());
 
-        if (!event.getMessage().getContentRaw().startsWith(prefix)) {
-            return;
-        }
-
         String[] args = event.getMessage().getContentRaw()
                 .replaceFirst("(?i)" + Pattern.quote(prefix), "")
                 .split("\\s+");
@@ -162,12 +158,23 @@ public class CommandManager extends ACommand {
         ICommand cmd = getCommand(invoke);
 
         CommandContext ctx = new CommandContext(bot, prefix, args, event, invoke, this);
+        boolean handledTag = false;
 
         // tags
-        ((TagsCmd) commands.get("tag")).handleTagMessage(event.getGuild().getIdLong(), invoke, event.getTextChannel());
+        if (!botConfig.isTagRequiresPrefix()) {
+            ((TagsCmd) commands.get("tag")).handleTagMessage(event.getGuild().getIdLong(), invoke, event.getTextChannel());
+            handledTag = true;
+        }
+
+        if (!event.getMessage().getContentRaw().startsWith(prefix)) {
+            return;
+        }
+
+        if (!handledTag) {
+            ((TagsCmd) commands.get("tag")).handleTagMessage(event.getGuild().getIdLong(), invoke, event.getTextChannel());
+        }
 
         if (cmd == null) return;
-
 
         if (!argsProvided(ctx, cmd)) {
             event.getChannel().sendMessage("Please provide arguments").queue();

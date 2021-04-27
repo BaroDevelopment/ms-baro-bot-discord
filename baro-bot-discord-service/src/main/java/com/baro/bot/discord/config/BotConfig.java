@@ -19,6 +19,7 @@ public class BotConfig {
     private final int redisMessageCacheDurationMinutes;
     private final List<String> botOwnerIds;
     private final String redisPassword;
+    private final boolean tagRequiresPrefix;
 
     public BotConfig(
             @Value("${token}") String token,
@@ -31,7 +32,8 @@ public class BotConfig {
             @Value("${oxford.dictionary.app.id}") String oxfordDictionaryAppId,
             @Value("${spring.redis.password}") String redisPassword,
             @Value("${oxford.dictionary.api.key}") String oxfordDictionaryApiKey,
-            @Value("${owner.ids}") List<String> botOwnerIds) {
+            @Value("${owner.ids}") List<String> botOwnerIds,
+            @Value("${tagRequiresPrefix}") boolean tagRequiresPrefix) {
         this.token = token;
         this.emoteGuildId = emoteGuildId;
         this.activity = activity;
@@ -43,6 +45,7 @@ public class BotConfig {
         this.oxfordDictionaryAppId = oxfordDictionaryAppId;
         this.oxfordDictionaryApiKey = oxfordDictionaryApiKey;
         this.redisMessageCacheDurationMinutes = redisMessageCacheDurationMinutes;
+        this.tagRequiresPrefix = tagRequiresPrefix;
     }
 
     public String getToken() {
@@ -87,5 +90,9 @@ public class BotConfig {
 
     public String getEmoteGuildId() {
         return emoteGuildId;
+    }
+
+    public boolean isTagRequiresPrefix() {
+        return tagRequiresPrefix;
     }
 }
