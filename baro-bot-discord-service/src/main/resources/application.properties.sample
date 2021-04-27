@@ -29,3 +29,4 @@ google.search.engine.id=
 oxford.dictionary.api.key=
 oxford.dictionary.app.id=
 emoteGuildId=
+tagRequiresPrefix=true
