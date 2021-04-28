@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   barobot-discord:
-    image: barodev/baro-bot-discord:0.0.6
+    image: barodev/baro-bot-discord:0.0.7
     container_name: barobot-discord
     hostname: barobot-discord
     ports:
