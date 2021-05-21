@@ -127,7 +127,7 @@ public class RandomReactionCmd extends ACommand implements ICommand {
     private class RandomReactionParams {
         @Parameter
         private String main;
-        @Parameter(names = {"-a", "-amount", "-n"})
+        @Parameter(names = {"-a", "-amount", "-n", "-w"})
         private int amount = 1;
     }
 }

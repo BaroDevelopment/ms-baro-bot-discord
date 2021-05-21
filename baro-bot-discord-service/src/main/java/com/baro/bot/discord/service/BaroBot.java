@@ -15,6 +15,7 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.requests.GatewayIntent;
+import net.dv8tion.jda.api.utils.MemberCachePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -56,6 +57,7 @@ public class BaroBot {
 
         JDABuilder builder = JDABuilder.createDefault(botConfig.getToken())
                 .setBulkDeleteSplittingEnabled(true)
+                .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .setAudioSendFactory(new NativeAudioSendFactory())
                 .enableIntents(
                         GatewayIntent.DIRECT_MESSAGE_REACTIONS,
